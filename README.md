@@ -14,13 +14,13 @@ they have added.
 5. Learn more common HTTP request types `POST`, `PUT` & `DELETE`
 6. Learn more about interacting with a server using URL queries and request bodies.
 
-We will be getting the data from the Northcoders News API server. You can read the neat reference for the API [here](https://northcoders-news-api.herokuapp.com/).
+You will be getting the data from your implementation of the Northcoders News API server.
 
 ### Stages
 
-1. Have a look at the API and at Reddit. Think about what data you have available, and how you will structure your application. What routes will your application have? What articles will you choose to display on the main page?
+1. Have a look at your API endpoints and at Reddit. Think about what data you have available, and how you will structure your application. What routes will your application have? What articles will you choose to display on the main page?
 
-2. Set up your routing with React Router. Render dummy components and make sure they are rendering in the right place. You should already have in place a component that connects to the Redux state and renders a list of all the articles.
+2. Set up your routing with React Router. Render dummy components and make sure they are rendering in the right place.
 
 3. Think about what data each component will need. Where will it come from? Will any components need to pass data down to dumb components as props? Focus on loading a list of articles for your front page first of all.
 

@@ -1,16 +1,29 @@
-// import * as types from '../actions/types';
+import * as types from '../actions/types';
 
-const initialState = {
+export const initialState = {
   articles: [],
-  selectedTopic: null
+  selectedTopic: null, 
+  loading: false
 };
 
-function reducer (prevState = initialState, action) {
+export function reducer (prevState = initialState, action = {}) {
   if (!action) return prevState;
-  const newState = Object.assign({}, prevState);
 
+  if (action.type === types.FETCH_ARTICLE_REQUEST) {
+    const newState = Object.assign({}, prevState);
+    newState.loading = true;
+    return newState;
+  }
 
-  return newState;
+  if (action.type === types.FETCH_ARTICLE_SUCCESS) {
+    const newState = Object.assign({}, prevState);
+    newState.articles = prevState.articles.concat(action.data);
+    return newState;
+  }
+
+  if (action.type === types.FETCH_ARTICLE_FAILED) {
+    return action.data;
+  }
+
+  return prevState;
 }
-
-export default reducer;

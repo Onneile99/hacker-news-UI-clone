@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Spinner from 'react-spinkit';
 import ArticleCard from './ArticleCard';
 import * as actions from '../actions/actions';
+import PropTypes from 'prop-types';
 
 
 class ArticleList extends React.Component {
@@ -37,5 +38,11 @@ function mapStateToProps (state) {
     loading: state.loading
   };
 }
+
+ArticleList.propTypes = {
+  fetchArticles: PropTypes.func.isRequired,
+  articles: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleList);

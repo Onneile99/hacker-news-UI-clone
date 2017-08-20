@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-import { reducer, initialState } from '../src/reducer/reducer';
+import reducer from '../src/reducer/articles.reducer';
+import {initialState} from '../src/reducer/articles.reducer';
 import * as actions from '../src/actions/actions';
 
 describe('REDUCER', () => {
@@ -15,15 +16,15 @@ describe('REDUCER', () => {
                     ]
                 });
             const newState = reducer(initialState, action);
-            expect(newState.articles).to.be.an('array');
-            expect(newState.articles).to.eql([
+            expect(newState.data.articles).to.be.an('array');
+            expect(newState.data).to.eql(
                 {
                     articles: [
                         { '2': 2 },
                         { '1': 1 }
                     ]
                 }
-            ]);
+            );
         });
         it('changes the loading property in the new state', (done) => {
             const action = actions.fetchArticles();
@@ -33,7 +34,8 @@ describe('REDUCER', () => {
         });
         it('returns the error if it fails', () => {
             const action = actions.fetchArticleFailed('error');
-            expect(reducer(initialState, action)).to.eql('error');
+            const newState = reducer(initialState, action);
+            expect(newState.error).to.eql('error');
         });
     });
 });

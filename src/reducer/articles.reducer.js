@@ -1,12 +1,13 @@
 import * as types from '../actions/types';
 
 export const initialState = {
-  articles: [],
-  selectedTopic: null, 
+  data: [],
+  selectedTopic: null,
+  error: null, 
   loading: false
 };
 
-export function reducer (prevState = initialState, action = {}) {
+function reducer (prevState = initialState, action = {}) {
   if (!action) return prevState;
 
   if (action.type === types.FETCH_ARTICLE_REQUEST) {
@@ -17,13 +18,20 @@ export function reducer (prevState = initialState, action = {}) {
 
   if (action.type === types.FETCH_ARTICLE_SUCCESS) {
     const newState = Object.assign({}, prevState);
-    newState.articles = prevState.articles.concat(action.data);
+    newState.data = action.payload;
+    newState.loading = false;
     return newState;
   }
 
   if (action.type === types.FETCH_ARTICLE_FAILED) {
-    return action.data;
+    const newState = Object.assign({}, prevState);
+    newState.error = action.payload;
+    newState.data = [];
+    newState.loading = false;
+    return newState;
   }
 
   return prevState;
 }
+
+export default reducer;

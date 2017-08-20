@@ -22,7 +22,7 @@ describe('ACTIONS', () => {
             };
             expect(actions.fetchArticleSuccess(input)).to.eql({
                 type: 'FETCH ARTICLE SUCCESS',
-                data: input
+                payload: input
             });
         });
     });
@@ -33,7 +33,7 @@ describe('ACTIONS', () => {
             };
             expect(actions.fetchArticleFailed(err)).to.eql({
                 type: 'FETCH ARTICLE FAILED',
-                data: err
+                payload: err
             });
         });
     });
@@ -68,7 +68,7 @@ describe('ASYNC ACTIONS', () => {
                 { type: types.FETCH_ARTICLE_REQUEST },
                 {
                     type: types.FETCH_ARTICLE_SUCCESS, 
-                    data: ['do something']
+                    payload: ['do something']
                 }
             ];
             return store.dispatch(actions.fetchArticles())

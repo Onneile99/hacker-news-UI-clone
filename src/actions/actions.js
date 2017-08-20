@@ -26,13 +26,13 @@ export function fetchArticleRequest () {
 export function fetchArticleSuccess (articles) {
     return {
         type: types.FETCH_ARTICLE_SUCCESS,
-        data: articles
+        payload: articles
     };
 }
 
 export function fetchArticleFailed (err) {
     return {
         type: types.FETCH_ARTICLE_FAILED,
-        data: err
+        payload: err
     };
 }

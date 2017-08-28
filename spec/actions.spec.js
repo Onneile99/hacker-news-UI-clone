@@ -101,7 +101,17 @@ describe('ACTIONS', () => {
                 });
             });
         });
-        
+        describe('fetchTopicsFailed', () => {
+            it('returns \'FETCH ARTICLES FAILED\' and payload', () => {
+                const err = {
+                    err: 'I am an error!'
+                };
+                expect(actions.fetchTopicsFailed(err)).to.eql({
+                    type: 'FETCH TOPICS FAILED',
+                    payload: err
+                });
+            });
+        });
     });
 
 });

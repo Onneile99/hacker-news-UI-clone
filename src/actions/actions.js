@@ -49,3 +49,10 @@ export function fetchTopicsSuccess (topics) {
         payload: topics
     };
 }
+
+export function fetchTopicsFailed (err) {
+    return {
+        type: types.FETCH_TOPICS_FAILED,
+        payload: err
+    };
+}

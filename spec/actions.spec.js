@@ -7,17 +7,20 @@ import configureMockStore from 'redux-mock-store';
 import * as actions from '../src/actions/actions';
 import * as types from '../src/actions/types';
 
+const middleware = [thunk];
+const mockStore = configureMockStore(middleware);
+
 describe('ACTIONS', () => {
     describe('ARTICLES ACTIONS', () => {
         describe('fetchArticlesRequest', () => {
-            it('returns the expected action', () => {
+            it('returns \'FETCH ARTICLES REQUEST\'', () => {
                 expect(actions.fetchArticlesRequest()).to.eql({
                     type: 'FETCH ARTICLES REQUEST'
                 });
             });
         });
         describe('fetchArticlesSuccess', () => {
-            it('returns the expected action', () => {
+            it('returns \'FETCH ARTICLES SUCCESS\' and payload', () => {
                 const input = {
                     article: 'I am an article!'
                 };
@@ -28,7 +31,7 @@ describe('ACTIONS', () => {
             });
         });
         describe('fetchArticlesFailed ', () => {
-            it('returns the expected action', () => {
+            it('returns \'FETCH ARTICLES FAILED\' and payload', () => {
                 const err = {
                     err: 'I am an error!'
                 };
@@ -39,17 +42,11 @@ describe('ACTIONS', () => {
             });
         });
 
-    });
-
-    const middleware = [thunk];
-    const mockStore = configureMockStore(middleware);
-
-    describe('ASYNC ARTICLES ACTIONS', () => {
-        afterEach(() => {
-            nock.cleanAll();
-        });
-        describe('fetchArticles', () => {
-            it('returns FETCH_ARTICLES_SUCCESS if fetchArticles ran', () => {
+        describe('fetchArticles ASYNC', () => {
+            afterEach(() => {
+                nock.cleanAll();
+            });
+            it('returns correct series of actions and payload if succesful', () => {
                 nock('http://localhost:3000/api')
                     .get('/articles')
                     .reply(200, {
@@ -77,14 +74,14 @@ describe('ACTIONS', () => {
 
     describe('TOPICS ACTIONS', () => {
         describe('fetchTopicsRequest', () => {
-            it('returns the expected action', () => {
+            it('returns \'FETCH TOPICS REQUEST\'', () => {
                 expect(actions.fetchTopicsRequest()).to.eql({
                     type: 'FETCH TOPICS REQUEST'
                 });
             });
         });
         describe('fetchTopicsSuccess', () => {
-            it('returns the expected action', () => {
+            it('returns \'FETCH TOPICS SUCCESS\' and payload', () => {
                 const input = {
                     topics: [
                         {
@@ -102,7 +99,7 @@ describe('ACTIONS', () => {
             });
         });
         describe('fetchTopicsFailed', () => {
-            it('returns \'FETCH ARTICLES FAILED\' and payload', () => {
+            it('returns \'FETCH TOPICS FAILED\' and payload', () => {
                 const err = {
                     err: 'I am an error!'
                 };
@@ -112,6 +109,33 @@ describe('ACTIONS', () => {
                 });
             });
         });
-    });
+        describe('fetchTopics ASYNC', () => {
+            afterEach(() => {
+                nock.cleanAll();
+            });
+            it('returns correct series of actions and payload if succesful', () => {
+                nock('http://localhost:3000/api')
+                    .get('/topics')
+                    .reply(200, {
+                        topics: ['do something']
+                    });
 
+                const store = mockStore({
+                    topics: []
+                });
+
+                const expectedActions = [
+                    { type: types.FETCH_TOPICS_REQUEST },
+                    {
+                        type: types.FETCH_TOPICS_SUCCESS,
+                        payload: ['do something']
+                    }
+                ];
+                return store.dispatch(actions.fetchTopics())
+                    .then(() => {
+                        expect(store.getActions()).to.eql(expectedActions);
+                    });
+            });
+        });
+    }); 
 });

@@ -3,7 +3,7 @@ import * as types from './types';
 import axios from 'axios';
 import {ROOT} from '../../config';
 
-
+// ARTICLES 
 export function fetchArticles () {
     return function (dispatch) {
         dispatch(fetchArticlesRequest());
@@ -34,6 +34,20 @@ export function fetchArticlesFailed (err) {
     return {
         type: types.FETCH_ARTICLES_FAILED,
         payload: err
+    };
+}
+
+// TOPICS
+export function fetchTopics () {
+    return function (dispatch) {
+        dispatch(fetchTopicsRequest());
+        return axios.get(`${ROOT}/topics`)
+            .then(res => {
+                dispatch(fetchTopicsSuccess(res.data.topics));
+            })
+            .catch(err => {
+                dispatch(fetchTopicsFailed(err));
+            });
     };
 }
 

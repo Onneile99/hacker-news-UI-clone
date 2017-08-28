@@ -43,6 +43,7 @@ export function fetchTopics () {
         dispatch(fetchTopicsRequest());
         return axios.get(`${ROOT}/topics`)
             .then(res => {
+                console.log(res.data)
                 dispatch(fetchTopicsSuccess(res.data.topics));
             })
             .catch(err => {

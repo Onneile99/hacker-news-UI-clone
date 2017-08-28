@@ -5,7 +5,7 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <h3 className='title is-3'>All Articles</h3>
+        <h3 className='title is-3'>Northcoders News</h3>
         {this.props.children}
       </div>
     );

@@ -36,3 +36,9 @@ export function fetchArticleFailed (err) {
         payload: err
     };
 }
+
+export function fetchTopicsRequest () {
+    return {
+        type: types.FETCH_TOPICS_REQUEST
+    };
+}

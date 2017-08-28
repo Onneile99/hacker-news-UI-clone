@@ -83,6 +83,24 @@ describe('ACTIONS', () => {
                 });
             });
         });
+        describe('fetchTopicsSuccess', () => {
+            it('returns the expected action', () => {
+                const input = {
+                    topics: [
+                        {
+                        _id: '594b990fc8f51a1e1b7f4240',
+                        title: 'Football',
+                        slug: 'football',
+                        __v: 0
+                        }
+                    ]
+                };
+                expect(actions.fetchTopicsSuccess(input)).to.eql({
+                    type: 'FETCH TOPICS SUCCESS',
+                    payload: input
+                });
+            });
+        });
     });
 
 });

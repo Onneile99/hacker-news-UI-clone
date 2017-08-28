@@ -42,3 +42,10 @@ export function fetchTopicsRequest () {
         type: types.FETCH_TOPICS_REQUEST
     };
 }
+
+export function fetchTopicsSuccess (topics) {
+    return {
+        type: types.FETCH_TOPICS_SUCCESS,
+        payload: topics
+    };
+}

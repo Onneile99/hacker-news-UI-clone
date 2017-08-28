@@ -9,7 +9,7 @@ describe('REDUCER', () => {
     });
     describe('fetchArticles', () => {
         it('adds a list of articles to the new state', () => {
-            const action = actions.fetchArticleSuccess({
+            const action = actions.fetchArticlesSuccess({
                     articles: [
                         { '2': 2 },
                         { '1': 1 }
@@ -33,7 +33,7 @@ describe('REDUCER', () => {
             expect(newState.loading).to.be.true;
         });
         it('returns the error if it fails', () => {
-            const action = actions.fetchArticleFailed('error');
+            const action = actions.fetchArticlesFailed('error');
             const newState = reducer(initialState, action);
             expect(newState.error).to.eql('error');
         });

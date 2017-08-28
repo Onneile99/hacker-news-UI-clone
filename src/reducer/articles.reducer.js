@@ -10,20 +10,20 @@ export const initialState = {
 function reducer (prevState = initialState, action = {}) {
   if (!action) return prevState;
 
-  if (action.type === types.FETCH_ARTICLE_REQUEST) {
+  if (action.type === types.FETCH_ARTICLES_REQUEST) {
     const newState = Object.assign({}, prevState);
     newState.loading = true;
     return newState;
   }
 
-  if (action.type === types.FETCH_ARTICLE_SUCCESS) {
+  if (action.type === types.FETCH_ARTICLES_SUCCESS) {
     const newState = Object.assign({}, prevState);
     newState.data = action.payload;
     newState.loading = false;
     return newState;
   }
 
-  if (action.type === types.FETCH_ARTICLE_FAILED) {
+  if (action.type === types.FETCH_ARTICLES_FAILED) {
     const newState = Object.assign({}, prevState);
     newState.error = action.payload;
     newState.data = [];

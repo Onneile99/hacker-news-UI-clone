@@ -8,32 +8,32 @@ import * as actions from '../src/actions/actions';
 import * as types from '../src/actions/types';
 
 describe('ACTIONS', () => {
-    describe('ARTICLE ACTIONS', () => {
-        describe('fetchArticleRequest', () => {
+    describe('ARTICLES ACTIONS', () => {
+        describe('fetchArticlesRequest', () => {
             it('returns the expected action', () => {
-                expect(actions.fetchArticleRequest()).to.eql({
-                    type: 'FETCH ARTICLE REQUEST'
+                expect(actions.fetchArticlesRequest()).to.eql({
+                    type: 'FETCH ARTICLES REQUEST'
                 });
             });
         });
-        describe('fetchArticleSuccess', () => {
+        describe('fetchArticlesSuccess', () => {
             it('returns the expected action', () => {
                 const input = {
                     article: 'I am an article!'
                 };
-                expect(actions.fetchArticleSuccess(input)).to.eql({
-                    type: 'FETCH ARTICLE SUCCESS',
+                expect(actions.fetchArticlesSuccess(input)).to.eql({
+                    type: 'FETCH ARTICLES SUCCESS',
                     payload: input
                 });
             });
         });
-        describe('fetchArticleFailed ', () => {
+        describe('fetchArticlesFailed ', () => {
             it('returns the expected action', () => {
                 const err = {
                     err: 'I am an error!'
                 };
-                expect(actions.fetchArticleFailed(err)).to.eql({
-                    type: 'FETCH ARTICLE FAILED',
+                expect(actions.fetchArticlesFailed(err)).to.eql({
+                    type: 'FETCH ARTICLES FAILED',
                     payload: err
                 });
             });
@@ -44,12 +44,12 @@ describe('ACTIONS', () => {
     const middleware = [thunk];
     const mockStore = configureMockStore(middleware);
 
-    describe('ASYNC ARTICLE ACTIONS', () => {
+    describe('ASYNC ARTICLES ACTIONS', () => {
         afterEach(() => {
             nock.cleanAll();
         });
         describe('fetchArticles', () => {
-            it('returns FETCH_ARTICLE_SUCCESS if fetchingArticles has been done', () => {
+            it('returns FETCH_ARTICLES_SUCCESS if fetchArticles ran', () => {
                 nock('http://localhost:3000/api')
                     .get('/articles')
                     .reply(200, {
@@ -61,9 +61,9 @@ describe('ACTIONS', () => {
                 });
 
                 const expectedActions = [
-                    { type: types.FETCH_ARTICLE_REQUEST },
+                    { type: types.FETCH_ARTICLES_REQUEST },
                     {
-                        type: types.FETCH_ARTICLE_SUCCESS,
+                        type: types.FETCH_ARTICLES_SUCCESS,
                         payload: ['do something']
                     }
                 ];
@@ -101,6 +101,7 @@ describe('ACTIONS', () => {
                 });
             });
         });
+        
     });
 
 });

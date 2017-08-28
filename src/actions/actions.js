@@ -6,33 +6,33 @@ import {ROOT} from '../../config';
 
 export function fetchArticles () {
     return function (dispatch) {
-        dispatch(fetchArticleRequest());
+        dispatch(fetchArticlesRequest());
         return axios.get(`${ROOT}/articles`)
             .then(res => {
-                dispatch(fetchArticleSuccess(res.data.articles));
+                dispatch(fetchArticlesSuccess(res.data.articles));
             })
             .catch(err => {
-                dispatch(fetchArticleFailed(err));
+                dispatch(fetchArticlesFailed(err));
             });
     };
 }
 
-export function fetchArticleRequest () {
+export function fetchArticlesRequest () {
     return {
-        type: types.FETCH_ARTICLE_REQUEST
+        type: types.FETCH_ARTICLES_REQUEST
     };
 }
 
-export function fetchArticleSuccess (articles) {
+export function fetchArticlesSuccess (articles) {
     return {
-        type: types.FETCH_ARTICLE_SUCCESS,
+        type: types.FETCH_ARTICLES_SUCCESS,
         payload: articles
     };
 }
 
-export function fetchArticleFailed (err) {
+export function fetchArticlesFailed (err) {
     return {
-        type: types.FETCH_ARTICLE_FAILED,
+        type: types.FETCH_ARTICLES_FAILED,
         payload: err
     };
 }

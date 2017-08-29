@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // Components
 import TopicsItem from './TopicsItem';
@@ -9,7 +10,7 @@ const TopicsSubNav = ({topics}) => {
         <div>
         <nav className="panel">
             <div className="panel-tabs">
-                <a className="is-active">all</a>
+                <Link to={'/articles'} className="is-active">all</Link>
                 {topics.map(topic => <TopicsItem title={topic.title} slug={topic.slug} key={topic._id} />)}
             </div>
         </nav>

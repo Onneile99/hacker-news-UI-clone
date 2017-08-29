@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const TopicsItem = ({slug}) => {
     return (
-        <a>{slug}</a>
+        <Link to={`/topics/${slug}`} activeClassName="active">{slug}</Link>
     );
 };
 

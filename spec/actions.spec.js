@@ -137,5 +137,13 @@ describe('ACTIONS', () => {
                     });
             });
         });
+        describe('fetchTopicsByIdRequest', () => {
+            it('returns \'FETCH TOPICS BY ID REQUEST\'', () => {
+                expect(actions.fetchTopicsByIdRequest()).to.eql({
+                    type: 'FETCH TOPICS BY ID REQUEST'
+                });
+            });
+        });
+        
     }); 
 });

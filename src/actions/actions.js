@@ -43,7 +43,6 @@ export function fetchTopics () {
         dispatch(fetchTopicsRequest());
         return axios.get(`${ROOT}/topics`)
             .then(res => {
-                console.log(res.data)
                 dispatch(fetchTopicsSuccess(res.data.topics));
             })
             .catch(err => {
@@ -69,5 +68,11 @@ export function fetchTopicsFailed (err) {
     return {
         type: types.FETCH_TOPICS_FAILED,
         payload: err
+    };
+}
+
+export function fetchTopicsByIdRequest () {
+    return {
+        type: types.FETCH_TOPICS_BY_ID_REQUEST
     };
 }

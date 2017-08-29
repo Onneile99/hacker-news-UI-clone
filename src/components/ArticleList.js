@@ -6,7 +6,7 @@ import Spinner from 'react-spinkit';
 import ArticleCard from './ArticleCard';
 
 
-function ArticleList ({loading, articles}) {
+const ArticleList = ({loading, articles}) => {
     return (
       <div>
         <div id='ArticleList'>

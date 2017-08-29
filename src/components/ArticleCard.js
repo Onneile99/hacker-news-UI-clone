@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ArticleCard = function (props) {
+const ArticleCard = ({title, votes}) => {
   return (
     <div className='box'>
       <article className='media'>
         <div className='media-left'>
           <p>Upvotes:</p>
-          {props.votes}
+          {votes}
         </div>
         <div className='media-content'>
           <div className='content'>
-            <h3 className='title is-3'>{props.title}</h3>
+            <h3 className='title is-3'>{title}</h3>
           </div>
         </div>
       </article>

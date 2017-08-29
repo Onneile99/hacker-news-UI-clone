@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TopicsItem = function (props) {
+const TopicsItem = ({slug}) => {
     return (
-        <a>{props.slug}</a>
+        <a>{slug}</a>
     );
 };
 

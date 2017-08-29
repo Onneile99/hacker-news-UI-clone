@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+// Redux
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 

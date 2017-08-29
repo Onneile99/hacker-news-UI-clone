@@ -90,3 +90,16 @@ export function fetchTopicArticlesFailed (err) {
         payload: err
     };
 }
+
+export function fetchTopicArticles (id) {
+    return function (dispatch) {
+        dispatch(fetchTopicArticlesRequest());
+        return axios.get(`${ROOT}/topics/${id}/articles`)
+            .then(res => {
+                dispatch(fetchTopicArticlesSuccess(res.data.articles));
+            })
+            .catch(err => {
+                dispatch(fetchTopicArticlesFailed(err));
+            });
+    };
+}

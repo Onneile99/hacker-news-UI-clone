@@ -43,8 +43,13 @@ describe('ACTIONS', () => {
         });
 
         describe('fetchArticles ASYNC', () => {
+            beforeEach(() => {
+                nock.disableNetConnect();
+            });
+            
             afterEach(() => {
                 nock.cleanAll();
+                nock.enableNetConnect();
             });
             it('returns correct series of actions and payload if succesful', () => {
                 nock('http://localhost:3000/api')
@@ -110,8 +115,13 @@ describe('ACTIONS', () => {
             });
         });
         describe('fetchTopics ASYNC', () => {
+            beforeEach(() => {
+                nock.disableNetConnect();
+            });
+            
             afterEach(() => {
                 nock.cleanAll();
+                nock.enableNetConnect();
             });
             it('returns correct series of actions and payload if succesful', () => {
                 nock('http://localhost:3000/api')
@@ -171,6 +181,42 @@ describe('ACTIONS', () => {
                     type: 'FETCH TOPIC ARTICLES FAILED',
                     payload: err
                 });
+            });
+        });
+        describe('fetchTopicArticles ASYNC', () => {
+            beforeEach(() => {
+                nock.disableNetConnect();
+            });
+            
+            afterEach(() => {
+                nock.cleanAll();
+                nock.enableNetConnect();
+            });
+            it('returns correct series of actions and payload if succesful', () => {
+                const topicId = 'football'
+                nock('http://localhost:3000/api')
+                    .get(`/topics/${topicId}/articles`)
+                    .reply(200, {
+                        articles: ['football stuff']
+                    });
+
+                const store = mockStore({
+                    articles: []
+                });
+
+                const expectedActions = [
+                    { type: types.FETCH_TOPIC_ARTICLES_REQUEST },
+                    {
+                        type: types.FETCH_TOPIC_ARTICLES_SUCCESS,
+                        payload: ['football stuff']
+                    }
+                ];
+
+                return store.dispatch(actions.fetchTopicArticles(topicId))
+                .then(() => {
+                        console.log(store.getActions());
+                        expect(store.getActions()).to.eql(expectedActions);
+                    });
             });
         });
     }); 

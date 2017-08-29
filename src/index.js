@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {render} from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -16,12 +16,18 @@ import reducer from './reducer/index';
 const store = createStore(reducer, applyMiddleware(thunk, logger));
 const history = createBrowserHistory();
 
-ReactDOM.render(<Provider store={store}>
-                  <Router history={history}>
-                    <App>
-                    <Switch>
-                      <Route exact path='/' component={ArticleList} />
-                    </Switch>
-                    </App>
-                  </Router>
-                </Provider>, document.getElementById('app'));
+const router = (
+  <Provider store={store}>
+    <Router history={history}>
+      <App>
+        <Switch>
+          <Route path='/' component={ArticleList}>
+
+          </Route>
+        </Switch>
+      </App>
+    </Router>
+  </Provider>
+);
+
+render(router, document.getElementById('app'));

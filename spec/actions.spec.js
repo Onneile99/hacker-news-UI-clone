@@ -214,7 +214,6 @@ describe('ACTIONS', () => {
 
                 return store.dispatch(actions.fetchTopicArticles(topicId))
                 .then(() => {
-                        console.log(store.getActions());
                         expect(store.getActions()).to.eql(expectedActions);
                     });
             });

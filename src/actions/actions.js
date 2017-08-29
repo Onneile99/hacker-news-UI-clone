@@ -71,8 +71,15 @@ export function fetchTopicsFailed (err) {
     };
 }
 
-export function fetchTopicsByIdRequest () {
+export function fetchTopicArticlesRequest () {
     return {
-        type: types.FETCH_TOPICS_BY_ID_REQUEST
+        type: types.FETCH_TOPIC_ARTICLES_REQUEST
+    };
+}
+
+export function fetchTopicArticlesSuccess (articles) {
+    return {
+        type: types.FETCH_TOPIC_ARTICLES_SUCCESS,
+        payload: articles
     };
 }

@@ -137,13 +137,41 @@ describe('ACTIONS', () => {
                     });
             });
         });
-        describe('fetchTopicsByIdRequest', () => {
-            it('returns \'FETCH TOPICS BY ID REQUEST\'', () => {
-                expect(actions.fetchTopicsByIdRequest()).to.eql({
-                    type: 'FETCH TOPICS BY ID REQUEST'
+        describe('fetchTopicArticlesRequest', () => {
+            it('returns \'FETCH TOPIC ARTICLES REQUEST\'', () => {
+                expect(actions.fetchTopicArticlesRequest()).to.eql({
+                    type: 'FETCH TOPIC ARTICLES REQUEST'
                 });
             });
         });
-        
+        describe('fetchTopicArticlesSuccess', () => {
+            it('returns \'FETCH TOPIC ARTICLES SUCCESS\' and payload', () => {
+                const input = {
+                    articles: [
+                        {
+                        _id: '594b990fc8f51a1e1b7f4240',
+                        title: 'Football',
+                        slug: 'football',
+                        __v: 0
+                        }
+                    ]
+                };
+                expect(actions.fetchTopicArticlesSuccess(input)).to.eql({
+                    type: 'FETCH TOPIC ARTICLES SUCCESS',
+                    payload: input
+                });
+            });
+        });
+        // describe('fetchTopicsFailed', () => {
+        //     it('returns \'FETCH TOPICS FAILED\' and payload', () => {
+        //         const err = {
+        //             err: 'I am an error!'
+        //         };
+        //         expect(actions.fetchTopicsFailed(err)).to.eql({
+        //             type: 'FETCH TOPICS FAILED',
+        //             payload: err
+        //         });
+        //     });
+        // });
     }); 
 });

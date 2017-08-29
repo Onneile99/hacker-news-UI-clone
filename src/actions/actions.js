@@ -83,3 +83,10 @@ export function fetchTopicArticlesSuccess (articles) {
         payload: articles
     };
 }
+
+export function fetchTopicArticlesFailed (err) {
+    return {
+        type: types.FETCH_TOPIC_ARTICLES_FAILED,
+        payload: err
+    };
+}

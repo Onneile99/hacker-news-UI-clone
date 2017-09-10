@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const TopicsItem = ({slug}) => {
     return (
-        <Link to={`/topics/${slug}`} activeClassName="active">{slug}</Link>
+        <Link to={`/topics/${slug}`}>{slug}</Link>
     );
 };
 

@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import createBrowserHistory from 'history/createBrowserHistory';
-import reducer from './reducer/index';
+import combinedReducer from './reducer/index';
 
 // STYLING
 import './css/bulma.css';
@@ -22,7 +22,7 @@ import './css/font-awesome.css';
 import AppContainer from './components/containers/AppContainer';
 import Home from './components/presentational/Home';
 
-const store = createStore(reducer, applyMiddleware(thunk, logger));
+const store = createStore(combinedReducer, applyMiddleware(thunk, logger));
 const history = createBrowserHistory();
 
 const router = (

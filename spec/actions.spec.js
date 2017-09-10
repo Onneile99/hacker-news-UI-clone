@@ -193,7 +193,7 @@ describe('ACTIONS', () => {
                 nock.enableNetConnect();
             });
             it('returns correct series of actions and payload if succesful', () => {
-                const topicId = 'football'
+                const topicId = 'football';
                 nock('http://localhost:3000/api')
                     .get(`/topics/${topicId}/articles`)
                     .reply(200, {

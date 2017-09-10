@@ -28,7 +28,7 @@ class App extends React.Component {
         {this.props.loading && (
             <Spinner name="pacman" color="coral" fadeIn="none" />
           )}
-        <ArticleList articles={this.props.articles} topics={this.props.topics} loading={this.props.loading}/>
+        <ArticleList articles={this.props.articles} topics={this.props.topics}/>
       </div>
     );
   }
@@ -55,7 +55,8 @@ function mapStateToProps(state) {
 
 App.propTypes = {
   articles: PropTypes.array.isRequired,
-  topics: PropTypes.array.isRequired
+  topics: PropTypes.array.isRequired,
+  loading: PropTypes.bool
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

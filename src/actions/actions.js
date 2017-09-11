@@ -57,6 +57,19 @@ export function fetchArticleByIdFailed (err) {
     };
 }
 
+export function fetchArticleById (id) {
+    return function (dispatch) {
+        dispatch(fetchArticleByIdRequest());
+        return axios.get(`${ROOT}/articles/${id}`)
+            .then(res => {
+                dispatch(fetchArticleByIdSuccess(res.data.articles));
+            })
+            .catch(err => {
+                dispatch(fetchArticleByIdFailed(err));
+            });
+    };
+}
+
 // TOPICS
 export function fetchTopics () {
     return function (dispatch) {

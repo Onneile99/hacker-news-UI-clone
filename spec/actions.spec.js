@@ -105,6 +105,42 @@ describe('ACTIONS', () => {
                 });
             });
         });
+
+        describe('fetchArticleById ASYNC', () => {
+            beforeEach(() => {
+                nock.disableNetConnect();
+            });
+            
+            afterEach(() => {
+                nock.cleanAll();
+                nock.enableNetConnect();
+            });
+            it('returns correct series of actions and payload if succesful', () => {
+                const testId = '594b9910c8f51a1e1b7f4243';
+                nock('http://localhost:3000/api')
+                    .get(`/articles/${testId}`)
+                    .reply(200, {
+                        articles: ['do something']
+                    });
+
+                const store = mockStore({
+                    articles: []
+                });
+
+                const expectedActions = [
+                    { type: types.FETCH_ARTICLE_BY_ID_REQUEST },
+                    {
+                        type: types.FETCH_ARTICLE_BY_ID_SUCCESS,
+                        payload: ['do something']
+                    }
+                ];
+                return store.dispatch(actions.fetchArticleById(testId))
+                    .then(() => {
+                        expect(store.getActions()).to.eql(expectedActions);
+                    });
+            });
+        });
+
     });
 
     describe('TOPICS ACTIONS', () => {

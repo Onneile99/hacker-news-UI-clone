@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import reducer from '../src/reducer/topics.reducer';
-import {initialState} from '../src/reducer/topics.reducer';
+import reducer from '../src/reducers/topics.reducer';
+import {initialState} from '../src/reducers/topics.reducer';
 import * as actions from '../src/actions/actions';
 
 describe('TOPICS REDUCER', () => {

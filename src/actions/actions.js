@@ -37,6 +37,26 @@ export function fetchArticlesFailed (err) {
     };
 }
 
+export function fetchArticleByIdRequest () {
+    return {
+        type: types.FETCH_ARTICLE_BY_ID_REQUEST
+    };
+}
+
+export function fetchArticleByIdSuccess (articles) {
+    return {
+        type: types.FETCH_ARTICLE_BY_ID_SUCCESS,
+        payload: articles
+    };
+}
+
+export function fetchArticleByIdFailed (err) {
+    return {
+        type: types.FETCH_ARTICLE_BY_ID_FAILED,
+        payload: err
+    };
+}
+
 // TOPICS
 export function fetchTopics () {
     return function (dispatch) {

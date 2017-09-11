@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import reducer from '../src/reducer/articles.reducer';
-import {initialState} from '../src/reducer/articles.reducer';
+import reducer from '../src/reducers/articles.reducer';
+import {initialState} from '../src/reducers/articles.reducer';
 import * as actions from '../src/actions/actions';
 
 describe('ARTICLES REDUCER', () => {

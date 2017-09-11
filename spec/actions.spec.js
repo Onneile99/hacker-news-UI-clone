@@ -75,6 +75,36 @@ describe('ACTIONS', () => {
                     });
             });
         });
+
+        describe('fetchArticleByIdRequest', () => {
+            it('returns \'FETCH ARTICLE BY ID REQUEST\'', () => {
+                expect(actions.fetchArticleByIdRequest()).to.eql({
+                    type: 'FETCH ARTICLE BY ID REQUEST'
+                });
+            });
+        });
+        describe('fetchArticleByIdSuccess', () => {
+            it('returns \'FETCH ARTICLE BY ID SUCCESS\' and payload', () => {
+                const input = {
+                    article: 'I am an article!'
+                };
+                expect(actions.fetchArticleByIdSuccess(input)).to.eql({
+                    type: 'FETCH ARTICLE BY ID SUCCESS',
+                    payload: input
+                });
+            });
+        });
+        describe('fetchArticleByIdFailed ', () => {
+            it('returns \'FETCH ARTICLE BY ID FAILED\' and payload', () => {
+                const err = {
+                    err: 'I am an error!'
+                };
+                expect(actions.fetchArticleByIdFailed(err)).to.eql({
+                    type: 'FETCH ARTICLE BY ID FAILED',
+                    payload: err
+                });
+            });
+        });
     });
 
     describe('TOPICS ACTIONS', () => {

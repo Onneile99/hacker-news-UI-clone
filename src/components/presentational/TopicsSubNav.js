@@ -27,7 +27,8 @@ const TopicsSubNav = ({ topics, onTopicClick, onAllClick }) => (
 
 TopicsSubNav.propTypes = {
   topics: PropTypes.array.isRequired,
-  onTopicClick: PropTypes.func.isRequired
+  onTopicClick: PropTypes.func.isRequired,
+  onAllClick: PropTypes.func.isRequired
 };
 
 export default TopicsSubNav;

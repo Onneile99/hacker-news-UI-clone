@@ -13,7 +13,7 @@ const ArticleCard = ({ title, votes, id }) => {
         <div className="media-content">
           {/* <Link> */}
             <div className="content">
-              <h3 className="title is-3"><Link to={`/topics/${id}`}>{title}</Link></h3>
+              <h3 className="title is-3"><Link to={`/articles/${id}`}>{title}</Link></h3>
             </div>
           {/* </Link> */}
         </div>

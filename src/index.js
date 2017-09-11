@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import createBrowserHistory from 'history/createBrowserHistory';
-import combinedReducer from './reducer/index';
+import combinedReducer from './reducers/index';
 
 // STYLING
 import './css/bulma.css';

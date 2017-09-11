@@ -4,12 +4,16 @@ import PropTypes from 'prop-types';
 // Components
 import TopicsFilterLink from './TopicsFilterLink';
 
-const TopicsSubNav = ({ topics, onTopicClick }) => (
+const TopicsSubNav = ({ topics, onTopicClick, onAllClick }) => (
   <div>
     <nav className="panel">
       <div className="panel-tabs">
+        <TopicsFilterLink
+          topic_name={'all'}
+          key={'all'}
+          onClick={() => onAllClick()}
+        />
         {topics.map(topic => (
-          console.log(topic),
           <TopicsFilterLink
             topic_name={topic.slug}
             key={topic._id}

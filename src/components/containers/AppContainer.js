@@ -20,6 +20,7 @@ class AppContainer extends React.Component {
         topics={this.props.topics}
         loading={this.props.loading}
         fetchTopicArticles={this.props.fetchTopicArticles}
+        fetchArticles={this.props.fetchArticles}
       />
     );
   }

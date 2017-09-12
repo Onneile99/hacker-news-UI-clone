@@ -67,4 +67,32 @@ describe('ARTICLES REDUCER', () => {
             expect(newState.error).to.eql('error');
         });
     });
+    describe('fetchArticleById', () => {
+        it('add one article to the new state', () => {
+            const action = actions.fetchArticleByIdSuccess({
+                    articles: [
+                        { '1': 1 }
+                    ]
+                });
+            const newState = reducer(initialState, action);
+            expect(newState.data.articles).to.be.an('array');
+            expect(newState.data).to.eql(
+                {
+                    articles: [
+                        { '1': 1 }
+                    ]
+                }
+            );
+        });
+        it('changes the loading property in the new state', () => {
+            const action = actions.fetchArticleByIdRequest();
+            const newState = reducer(initialState, action);
+            expect(newState.loading).to.be.true;
+        });
+        it('returns the error if it fails', () => {
+            const action = actions.fetchArticleByIdFailed('error');
+            const newState = reducer(initialState, action);
+            expect(newState.error).to.eql('error');
+        });
+    });
 });

@@ -62,7 +62,7 @@ export function fetchArticleById (id) {
         dispatch(fetchArticleByIdRequest());
         return axios.get(`${ROOT}/articles/${id}`)
             .then(res => {
-                dispatch(fetchArticleByIdSuccess(res.data.articles));
+                dispatch(fetchArticleByIdSuccess(res.data));
             })
             .catch(err => {
                 dispatch(fetchArticleByIdFailed(err));

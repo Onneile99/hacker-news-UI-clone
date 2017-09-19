@@ -68,7 +68,7 @@ function reducer (prevState = initialState, action = {}) {
   if (action.type === types.FETCH_ARTICLE_BY_ID_FAILED) {
     const newState = Object.assign({}, prevState);
     newState.error = action.payload;
-    newState.data = [];
+    newState.data = prevState.data;
     newState.loading = false;
     return newState;
   }

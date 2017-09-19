@@ -2,7 +2,7 @@ import * as types from '../actions/types';
 
 export const initialState = {
   data: [],
-  selectedTopic: null,
+  article: null,
   error: null, 
   loading: false
 };
@@ -60,7 +60,7 @@ function reducer (prevState = initialState, action = {}) {
 
   if (action.type === types.FETCH_ARTICLE_BY_ID_SUCCESS) {
     const newState = Object.assign({}, prevState);
-    newState.data = action.payload;
+    newState.article = action.payload.article;
     newState.loading = false;
     return newState;
   }
@@ -68,7 +68,7 @@ function reducer (prevState = initialState, action = {}) {
   if (action.type === types.FETCH_ARTICLE_BY_ID_FAILED) {
     const newState = Object.assign({}, prevState);
     newState.error = action.payload;
-    newState.data = prevState.data;
+    newState.article = prevState.article;
     newState.loading = false;
     return newState;
   }

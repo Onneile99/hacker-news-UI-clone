@@ -158,3 +158,16 @@ export function fetchCommentsFailed (err) {
         payload: err
     };
 }
+
+export function fetchComments (articleId) {
+    return function (dispatch) {
+        dispatch(fetchCommentsRequest());
+        return axios.get(`${ROOT}/articles/${articleId}/comments`)
+            .then(res => {
+                dispatch(fetchCommentsSuccess(res.data.comments));
+            })
+            .catch(err => {
+                dispatch(fetchCommentsFailed(err));
+            });
+    };
+}

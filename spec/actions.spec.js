@@ -321,5 +321,38 @@ describe('ACTIONS', () => {
         });
       });
     });
+    describe('fetchComments ASYNC', () => {
+      beforeEach(() => {
+        nock.disableNetConnect();
+      });
+
+      afterEach(() => {
+        nock.cleanAll();
+        nock.enableNetConnect();
+      });
+      it('returns correct series of actions and payload if succesful', () => {
+        const articleId = '594b9910c8f51a1e1b7f4243';
+        nock('http://localhost:3000/api')
+          .get(`/articles/${articleId}/comments`)
+          .reply(200, {
+            comments: ['a bunch of comments']
+          });
+
+        const store = mockStore({
+          comments: []
+        });
+
+        const expectedActions = [
+          { type: types.FETCH_COMMENTS_REQUEST },
+          {
+            type: types.FETCH_COMMENTS_SUCCESS,
+            payload: ['a bunch of comments']
+          }
+        ];
+        return store.dispatch(actions.fetchComments(articleId)).then(() => {
+          expect(store.getActions()).to.eql(expectedActions);
+        });
+      });
+    });
   });
 });

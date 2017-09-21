@@ -17,7 +17,7 @@ const ArticleSingle = ({ article, comments }) => {
         <p>Votes: {article.votes}</p>
       </section>
       <section className="container">
-        <h2 className="subtitle is-4">all {comments.length} comments</h2>
+        <h2 className="subtitle is-5">all {comments.length} comments</h2>
         {comments.map(comment => (
           <CommentCard
             body={comment.body}

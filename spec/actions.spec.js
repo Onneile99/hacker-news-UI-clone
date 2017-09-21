@@ -282,4 +282,44 @@ describe('ACTIONS', () => {
       });
     });
   });
+
+  describe('COMMENTS ACTIONS', () => {
+    describe('fetchCommentsRequest', () => {
+      it('returns \'FETCH COMMENTS REQUEST\'', () => {
+        expect(actions.fetchCommentsRequest()).to.eql({
+          type: 'FETCH COMMENTS REQUEST'
+        });
+      });
+    });
+    describe('fetchCommentsSuccess', () => {
+      it('returns \'FETCH COMMENTS SUCCESS\' and payload', () => {
+        const input = {
+          comments: [
+            {
+              _id: '594b990fc8f51a1e1b7f4240',
+              body: 'Football',
+              belongs_to: '594b9910c8f51a1e1b7f4243',
+              created_by: 'tickle122',
+              votes: 4
+            }
+          ]
+        };
+        expect(actions.fetchCommentsSuccess(input)).to.eql({
+          type: 'FETCH COMMENTS SUCCESS',
+          payload: input
+        });
+      });
+    });
+    describe('fetchCommentsFailed', () => {
+      it('returns \'FETCH COMMENTS FAILED\' and payload', () => {
+        const err = {
+          err: 'I am an error!'
+        };
+        expect(actions.fetchCommentsFailed(err)).to.eql({
+          type: 'FETCH COMMENTS FAILED',
+          payload: err
+        });
+      });
+    });
+  });
 });

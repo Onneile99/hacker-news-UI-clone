@@ -17,7 +17,7 @@ class ArticleSingleContainer extends React.Component {
   render () {
     return (
       <div>
-        <ArticleSingle article={this.props.article}/>
+        <ArticleSingle article={this.props.article} comments={this.props.comments}/>
       </div>
     );
   }

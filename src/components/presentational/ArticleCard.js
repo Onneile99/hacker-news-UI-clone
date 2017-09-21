@@ -11,11 +11,9 @@ const ArticleCard = ({ title, votes, id }) => {
           {votes}
         </div>
         <div className="media-content">
-          {/* <Link> */}
             <div className="content">
               <h3 className="title is-3"><Link to={`/articles/${id}`}>{title}</Link></h3>
             </div>
-          {/* </Link> */}
         </div>
       </article>
     </div>

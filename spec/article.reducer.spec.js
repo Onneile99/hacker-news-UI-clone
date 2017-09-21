@@ -13,8 +13,8 @@ describe('ARTICLE REDUCER', () => {
         article: { title: 'test article' }
       });
       const newState = reducer(initialState, action);
-      expect(newState.article).to.be.an('object');
-      expect(newState.article).to.eql({ title: 'test article' });
+      expect(newState.articleById).to.be.an('object');
+      expect(newState.articleById).to.eql({ title: 'test article' });
     });
     it('changes the loading property in the new state', () => {
       const action = actions.fetchArticleByIdRequest();

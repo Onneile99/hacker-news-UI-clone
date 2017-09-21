@@ -1,7 +1,7 @@
 import * as types from '../actions/types';
 
 export const initialState = {
-  article: {},
+  articleById: {},
   error: null, 
   loading: false
 };
@@ -17,7 +17,7 @@ function reducer (prevState = initialState, action = {}) {
 
   if (action.type === types.FETCH_ARTICLE_BY_ID_SUCCESS) {
     const newState = Object.assign({}, prevState);
-    newState.article = Object.assign({}, prevState.article, action.payload.article);
+    newState.articleById = Object.assign({}, prevState.article, action.payload.article);
     newState.loading = false;
     return newState;
   }
@@ -25,7 +25,7 @@ function reducer (prevState = initialState, action = {}) {
   if (action.type === types.FETCH_ARTICLE_BY_ID_FAILED) {
     const newState = Object.assign({}, prevState);
     newState.error = action.payload;
-    newState.article = prevState.article;
+    newState.articleById = Object.assign({}, prevState.article);
     newState.loading = false;
     return newState;
   }

@@ -35,9 +35,6 @@ function mapDispatchToProps (dispatch) {
     },
     fetchTopicArticles: topic => {
       dispatch(actions.fetchTopicArticles(topic));
-    },
-    fetchArticleById: id => {
-      dispatch(actions.fetchArticleById(id));
     }
   };
 }
@@ -56,8 +53,7 @@ AppContainer.propTypes = {
   loading: PropTypes.bool,
   fetchArticles: PropTypes.func.isRequired,
   fetchTopics: PropTypes.func.isRequired,
-  fetchTopicArticles: PropTypes.func.isRequired,
-  fetchArticleById: PropTypes.func.isRequired
+  fetchTopicArticles: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

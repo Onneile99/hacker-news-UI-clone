@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// Redux
+// REDUX
 import { connect } from 'react-redux';
 import * as actions from '../../actions/actions';
+
+// COMPONENTS
+import ArticleSingle from '../presentational/ArticleSingle';
 
 class ArticleSingleContainer extends React.Component {
   componentDidMount () {
@@ -13,7 +16,7 @@ class ArticleSingleContainer extends React.Component {
   render () {
     return (
       <div>
-        {this.props.match.params.article_id}
+        <ArticleSingle article={this.props.article}/>
       </div>
     );
   }
@@ -25,15 +28,17 @@ function mapDispatchToProps (dispatch) {
     }
   };
 }
+
 function mapStateToProps (state) {
   return {
-    article: state.articles.article,
+    article: state.article.articleById,
     loading: state.loading
   };
 }
 
 ArticleSingleContainer.propTypes = {
   match: PropTypes.object.isRequired,
+  article: PropTypes.object.isRequired,
   fetchArticleById: PropTypes.func.isRequired,
 };
 

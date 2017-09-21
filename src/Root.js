@@ -19,9 +19,9 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-        <Route exact path="/articles/:article_id" component={ArticleSingleContainer} />
+        <Route exact={true} path="/articles/:article_id" component={ArticleSingleContainer} />
         <Route path="/" component={AppContainer} />
-        <Route exact path="/" component={Home} />
+        <Route exact={true} path="/" component={Home} />
         <Route path="/topics/(:topic_name)/articles" component={Home} />
       </Switch>
     </Router>

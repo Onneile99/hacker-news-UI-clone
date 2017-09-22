@@ -10,8 +10,14 @@ const CommentCard = ({ body, votes, created_by, created_at }) => {
           {created_by} on {date.toDateString()}, {votes} votes
         </p>
         <p className="content">{body}</p>
-        <i className="fa fa-sort-asc" aria-hidden="true" />
-        <i className="fa fa-sort-desc" aria-hidden="true" />
+        <p>
+          <span>
+            <i className="fa fa-arrow-up" aria-hidden="true" />
+          </span>{' '}
+          <span>
+            <i className="fa fa-arrow-down" aria-hidden="true" />
+          </span>
+        </p>
       </div>
     </article>
   );

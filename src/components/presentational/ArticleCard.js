@@ -10,11 +10,11 @@ const ArticleCard = ({ title, votes, id, created_by }) => {
           <div className="tile is-ancestor">
             <div className="tile is-1 is-vertical">
               <div className="tile">
-                <i className="fa fa-sort-asc" aria-hidden="true" />
+                <i className="fa fa-arrow-up" aria-hidden="true" />
               </div>
               <div className="tile">{votes}</div>
               <div className="tile">
-                <i className="fa fa-sort-desc" aria-hidden="true" />
+                <i className="fa fa-arrow-down" aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -24,7 +24,7 @@ const ArticleCard = ({ title, votes, id, created_by }) => {
             <h3 className="title is-3">
               <Link to={`/articles/${id}`}>{title}</Link>
             </h3>
-            <p className="subtitle is-5">submitted by {created_by}</p>
+            <p>submitted by {created_by}</p>
           </div>
         </div>
       </article>

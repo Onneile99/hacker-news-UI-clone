@@ -12,9 +12,18 @@ const ArticleSingle = ({ article, comments }) => {
           {article.title}{' '}
           <span className="tag is-light">{article.belongs_to}</span>
         </h1>
-        <p className="subtitle is-6">submited by {article.created_by}</p>
+        <p className="subtitle is-6">
+          submited by {article.created_by}, {article.votes} votes
+        </p>
         <p className="content">{article.body}</p>
-        <p>Votes: {article.votes}</p>
+        <p>
+          <span>
+            <i className="fa fa-arrow-up" aria-hidden="true" />
+          </span>{' '}
+          <span>
+            <i className="fa fa-arrow-down" aria-hidden="true" />
+          </span>
+        </p>
       </section>
       <section className="container">
         <h2 className="subtitle is-5">all {comments.length} comments</h2>

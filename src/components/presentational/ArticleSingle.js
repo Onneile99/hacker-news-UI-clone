@@ -17,11 +17,11 @@ const ArticleSingle = ({ article, comments }) => {
         </p>
         <p className="content">{article.body}</p>
         <p>
-          <span>
-            <i className="fa fa-arrow-up" aria-hidden="true" />
+        <span>
+            <i className="fa fa-chevron-up" aria-hidden="true" />
           </span>{' '}
           <span>
-            <i className="fa fa-arrow-down" aria-hidden="true" />
+            <i className="fa fa-chevron-down" aria-hidden="true" />
           </span>
         </p>
       </section>

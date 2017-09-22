@@ -4,22 +4,29 @@ import PropTypes from 'prop-types';
 const CommentCard = ({ body, votes, created_by, created_at }) => {
   let date = new Date(created_at);
   return (
-    <article className="message is-dark">
-      <div className="message-body">
-        <p>
-          {created_by} on {date.toDateString()}, {votes} votes
-        </p>
-        <p className="content">{body}</p>
-        <p>
-          <span>
-            <i className="fa fa-arrow-up" aria-hidden="true" />
-          </span>{' '}
-          <span>
-            <i className="fa fa-arrow-down" aria-hidden="true" />
-          </span>
-        </p>
-      </div>
-    </article>
+    <div className="box">
+      <article className="media">
+        <div className="media-left">
+          <div className="tile is-ancestor">
+            <div className="tile is-1 is-vertical">
+              <div className="tile">
+                <i className="fa fa-chevron-up" aria-hidden="true" />
+              </div>
+              <div className="tile">{votes}</div>
+              <div className="tile">
+                <i className="fa fa-chevron-down" aria-hidden="true" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="media-content">
+          <p>
+            {created_by} on {date.toDateString()}, {votes} votes
+          </p>
+          <p className="content">{body}</p>
+        </div>
+      </article>
+    </div>
   );
 };
 

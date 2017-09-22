@@ -13,6 +13,7 @@ const ArticleList = ({ articles }) => {
             title={article.title}
             votes={article.votes}
             id={article._id}
+            created_by={article.created_by}
             key={article.title}
           />
         ))}

@@ -13,13 +13,13 @@ const history = createBrowserHistory();
 // COMPONENTS
 import AppContainer from './components/containers/AppContainer';
 import Home from './components/presentational/Home';
-import ArticleSingleContainer from './components/containers/ArticleSingleContainer';
+import ArticlePageContainer from './components/containers/ArticlePageContainer';
 
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-        <Route exact={true} path="/articles/:article_id" component={ArticleSingleContainer} />
+        <Route exact={true} path="/articles/:article_id" component={ArticlePageContainer} />
         <Route path="/" component={AppContainer} />
         <Route exact={true} path="/" component={Home} />
         <Route path="/topics/(:topic_name)/articles" component={Home} />

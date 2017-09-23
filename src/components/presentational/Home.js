@@ -17,7 +17,7 @@ const Home = ({
   return (
     <div>
       <Navbar/>
-      <div className="container is-fluid">
+      <div>
         {loading && <Spinner name="pacman" color="coral" fadeIn="none" />}
         <TopicsSubNav
           topics={topics}

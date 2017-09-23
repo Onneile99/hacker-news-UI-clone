@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Components
 import CommentCard from './CommentCard';
 
-const ArticleSingle = ({ article, comments }) => {
+const ArticlePage = ({ article, comments }) => {
   return (
     <div className="container is-fluid">
       <section className="box">
@@ -41,9 +41,9 @@ const ArticleSingle = ({ article, comments }) => {
   );
 };
 
-ArticleSingle.propTypes = {
+ArticlePage.propTypes = {
   article: PropTypes.object.isRequired,
   comments: PropTypes.array.isRequired
 };
 
-export default ArticleSingle;
+export default ArticlePage;

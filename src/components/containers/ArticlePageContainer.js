@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/actions';
 
 // COMPONENTS
-import ArticleSingle from '../presentational/ArticleSingle';
+import ArticlePage from '../presentational/ArticlePage';
 
-class ArticleSingleContainer extends React.Component {
+class ArticlePageContainer extends React.Component {
   componentDidMount () {
     this.props.fetchArticleById(this.props.match.params.article_id);
     this.props.fetchComments(this.props.match.params.article_id);
@@ -17,7 +17,7 @@ class ArticleSingleContainer extends React.Component {
   render () {
     return (
       <div>
-        <ArticleSingle article={this.props.article} comments={this.props.comments}/>
+        <ArticlePage article={this.props.article} comments={this.props.comments}/>
       </div>
     );
   }
@@ -41,7 +41,7 @@ function mapStateToProps (state) {
   };
 }
 
-ArticleSingleContainer.propTypes = {
+ArticlePageContainer.propTypes = {
   match: PropTypes.object.isRequired,
   article: PropTypes.object.isRequired,
   comments: PropTypes.array.isRequired,
@@ -49,4 +49,4 @@ ArticleSingleContainer.propTypes = {
   fetchComments: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleSingleContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ArticlePageContainer);

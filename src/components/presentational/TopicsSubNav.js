@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import TopicsFilterLink from './TopicsFilterLink';
 
 const TopicsSubNav = ({ topics, onTopicClick, onAllClick }) => (
-  <div>
-    <nav className="panel">
-      <div className="panel-tabs">
+  <div className="tabs is-left">
+      <ul>
         <TopicsFilterLink
           topic_name={'all'}
           key={'all'}
@@ -20,8 +19,7 @@ const TopicsSubNav = ({ topics, onTopicClick, onAllClick }) => (
             onClick={() => onTopicClick(topic.slug)}
           />
         ))}
-      </div>
-    </nav>
+        </ul>
   </div>
 );
 

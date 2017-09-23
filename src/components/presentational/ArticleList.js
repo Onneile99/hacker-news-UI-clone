@@ -6,7 +6,7 @@ import ArticleCard from './ArticleCard';
 
 const ArticleList = ({ articles }) => {
   return (
-    <div>
+    <div className="container is-fluid">
       <div id="ArticleList">
         {articles.map(article => (
           <ArticleCard

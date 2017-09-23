@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
 import ArticleList from './ArticleList';
 import TopicsSubNav from './TopicsSubNav';
+import Navbar from './Navbar';
 
 const Home = ({
   loading,
@@ -15,8 +16,8 @@ const Home = ({
 }) => {
   return (
     <div>
-      <h3 className="title is-3">Northcoders News</h3>
-      <div id="TopicsSubNav">
+      <Navbar/>
+      <div className="container is-fluid">
         {loading && <Spinner name="pacman" color="coral" fadeIn="none" />}
         <TopicsSubNav
           topics={topics}

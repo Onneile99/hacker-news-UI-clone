@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const TopicsFilterLink = ({ topic_name, onClick }) => (
-  <Link
-    to={topic_name === 'all' ? '/' : `/topics/${topic_name}/articles`}
-    onClick={onClick}
-  >
-    {topic_name}
-  </Link>
+  <li>
+    <Link
+      to={topic_name === 'all' ? '/' : `/topics/${topic_name}/articles`}
+      onClick={onClick}
+    >
+      {topic_name}
+    </Link>
+  </li>
 );
 
 TopicsFilterLink.propTypes = {

@@ -4,30 +4,32 @@ import { Link } from 'react-router-dom';
 
 const ArticleCard = ({ title, votes, id, created_by }) => {
   return (
-    <div className="box">
-      <article className="media">
-        <div className="media-left">
-          <div className="tile is-ancestor">
-            <div className="tile is-1 is-vertical">
-              <div className="tile">
-                <i className="fa fa-chevron-up" aria-hidden="true" />
-              </div>
-              <div className="tile">{votes}</div>
-              <div className="tile">
-                <i className="fa fa-chevron-down" aria-hidden="true" />
+    <div className="container is-fluid">
+      <div className="box">
+        <article className="media">
+          <div className="media-left">
+            <div className="tile is-ancestor">
+              <div className="tile is-1 is-vertical">
+                <div className="tile">
+                  <i className="fa fa-chevron-up" aria-hidden="true" />
+                </div>
+                <div className="tile">{votes}</div>
+                <div className="tile">
+                  <i className="fa fa-chevron-down" aria-hidden="true" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="media-content">
-          <div className="content">
-            <h3 className="title is-3">
-              <Link to={`/articles/${id}`}>{title}</Link>
-            </h3>
-            <p>submitted by {created_by}</p>
+          <div className="media-content">
+            <div className="content">
+              <div className="title is-5">
+                <Link to={`/articles/${id}`}>{title}</Link>
+              </div>
+              <div className="subtitle is-7">submitted by {created_by}</div>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
     </div>
   );
 };

@@ -401,5 +401,41 @@ describe('ACTIONS', () => {
         });
       });
     });
+    describe('alterCommentVotes ASYNC', () => {
+      beforeEach(() => {
+        nock.disableNetConnect();
+      });
+
+      afterEach(() => {
+        nock.cleanAll();
+        nock.enableNetConnect();
+      });
+      it('returns correct series of actions and payload if succesful', () => {
+        const commentId = '594b9910c8f51a1e1b7f4268';
+        const vote = 'up';
+        nock('http://localhost:3000/api')
+          .put(`/comments/${commentId}?vote=${vote}`, {})
+          .reply(200, {
+            comment: { body: 'test' }
+          });
+
+        const store = mockStore({
+          comment: null
+        });
+
+        const expectedActions = [
+          { type: types.ALTER_COMMENT_VOTES_REQUEST },
+          {
+            type: types.ALTER_COMMENT_VOTES_SUCCESS,
+            payload: {
+              comment: { body: 'test' }
+            }
+          }
+        ];
+        return store.dispatch(actions.alterCommentVotes(commentId, vote)).then(() => {
+          expect(store.getActions()).to.eql(expectedActions);
+        });
+      });
+    });
   });
 });

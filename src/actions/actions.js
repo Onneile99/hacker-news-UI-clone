@@ -191,3 +191,16 @@ export function alterCommentVotesFailed (err) {
         payload: err
     };
 }
+
+export function alterCommentVotes (commentId, vote) {
+    return function (dispatch) {
+        dispatch(alterCommentVotesRequest());
+        return axios.put(`${ROOT}/comments/${commentId}?vote=${vote}`, {})
+            .then(res => {
+                dispatch(alterCommentVotesSuccess(res.data));
+            })
+            .catch(err => {
+                dispatch(alterCommentVotesFailed(err));
+            });
+    };
+}

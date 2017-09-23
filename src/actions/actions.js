@@ -171,3 +171,23 @@ export function fetchComments (articleId) {
             });
     };
 }
+
+export function alterCommentVotesRequest () {
+    return {
+        type: types.ALTER_COMMENT_VOTES_REQUEST
+    };
+}
+
+export function alterCommentVotesSuccess (comment) {
+    return {
+        type: types.ALTER_COMMENT_VOTES_SUCCESS,
+        payload: comment
+    };
+}
+
+export function alterCommentVotesFailed (err) {
+    return {
+        type: types.ALTER_COMMENT_VOTES_FAILED,
+        payload: err
+    };
+}

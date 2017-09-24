@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const ArticleCard = ({ title, votes, id, created_by }) => {
   return (
     <div className="container is-fluid">
-      <div className="box">
+      <div className="message-body">
         <article className="media">
           <div className="media-left">
             <div className="tile is-ancestor">

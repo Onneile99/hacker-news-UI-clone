@@ -1,27 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {secondsToTimeString} from '../../helpers/secondsToTimeString';
+
+// Components
+import CommentVotingSegment from './CommentVotingSegment';
 
 const CommentCard = ({ body, votes, created_by, created_at }) => {
-  let date = new Date(created_at);
+  const currentDate = Date.now();
+  const differenceString = secondsToTimeString((currentDate - created_at) / 1000.0);
+
   return (
       <div className="message-body">
         <div className="media">
           <div className="media-left">
-            <div className="tile is-ancestor">
-              <div className="tile is-vertical">
-                <div className="tile icon">
-                  <i className="fa fa-chevron-up" aria-hidden="true" />
-                </div>
-                
-                <div className="tile icon">
-                  <i className="fa fa-chevron-down" aria-hidden="true" />
-                </div>
-              </div>
-            </div>
+            <CommentVotingSegment/>
           </div>
           <div className="media-content is-size-7 has-text-black">
             <p className="subtitle is-7">
-              {created_by} on {date.toDateString()}, {votes} votes
+              {`submitted ${differenceString} ago by ${created_by}, ${votes} votes`}
             </p>
             {body}
           </div>

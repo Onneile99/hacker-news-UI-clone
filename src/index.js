@@ -8,7 +8,7 @@ import logger from 'redux-logger';
 import combinedReducer from './reducers/index';
 
 // STYLING
-import './css/bulma.css';
+import '../node_modules/bulma/css/bulma.css';
 import './css/font-awesome.css';
 
 // COMPONENTS

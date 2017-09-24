@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => (
   <nav
@@ -6,7 +7,11 @@ const Navbar = () => (
     role="navigation"
     aria-label="main navigation"
   >
-    <p className="navbar-item title is-4 has-text-black has-text-weight-bold">Hacker News Clone</p>
+    <Link to="/">
+      <p className="navbar-item title is-4 has-text-black has-text-weight-bold">
+        Hacker News Clone
+      </p>
+    </Link>
   </nav>
 );
 

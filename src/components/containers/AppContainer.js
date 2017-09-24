@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Home from '../presentational/Home';
+import App from '../presentational/App';
 
 // Redux
 import { connect } from 'react-redux';
@@ -14,7 +14,7 @@ class AppContainer extends React.Component {
 
   render () {
     return (
-      <Home
+      <App
         articles={this.props.articles}
         topics={this.props.topics}
         loading={this.props.loading}

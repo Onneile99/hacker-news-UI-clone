@@ -12,7 +12,7 @@ const history = createBrowserHistory();
 
 // COMPONENTS
 import AppContainer from './components/containers/AppContainer';
-import Home from './components/presentational/Home';
+import App from './components/presentational/App';
 import ArticlePageContainer from './components/containers/ArticlePageContainer';
 
 const Root = ({ store }) => (
@@ -21,8 +21,8 @@ const Root = ({ store }) => (
       <Switch>
         <Route exact={true} path="/articles/:article_id" component={ArticlePageContainer} />
         <Route path="/" component={AppContainer} />
-        <Route exact={true} path="/" component={Home} />
-        <Route path="/topics/(:topic_name)/articles" component={Home} />
+        <Route exact={true} path="/" component={App} />
+        <Route path="/topics/(:topic_name)/articles" component={App} />
       </Switch>
     </Router>
   </Provider>

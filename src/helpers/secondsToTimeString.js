@@ -1,5 +1,5 @@
 // Please do not change the name of this function
-function secondsToTimeString(seconds) {
+function secondsToTimeString (seconds) {
     if (seconds === undefined) return '';
     
     const parsedYears = Math.floor(seconds / 31536000);

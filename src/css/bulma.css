@@ -6792,7 +6792,7 @@ a.nav-item:not(.button).is-tab.is-active {
   color: #4a4a4a;
   display: block;
   line-height: 1.5;
-  padding: 0.5rem 1rem;
+  padding: 0.35rem 0.35rem;
   position: relative;
 }
 

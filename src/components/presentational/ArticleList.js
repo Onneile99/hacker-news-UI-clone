@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import ArticleCard from './ArticleCard';
+import ArticleCardMini from './ArticleCardMini';
 
 const ArticleList = ({ articles }) => (
   <div id="ArticleList">
     {articles.map(article => (
-      <ArticleCard
+      <ArticleCardMini
         title={article.title}
         votes={article.votes}
         id={article._id}

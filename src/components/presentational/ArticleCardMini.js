@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const ArticleCard = ({ title, votes, id, created_by }) => {
+const ArticleCardMini = ({ title, votes, id, created_by }) => {
   return (
     <div className="container is-fluid">
       <div className="message-body">
@@ -34,11 +34,11 @@ const ArticleCard = ({ title, votes, id, created_by }) => {
   );
 };
 
-ArticleCard.propTypes = {
+ArticleCardMini.propTypes = {
   title: PropTypes.string.isRequired,
   created_by: PropTypes.string.isRequired,
   votes: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired
 };
 
-export default ArticleCard;
+export default ArticleCardMini;

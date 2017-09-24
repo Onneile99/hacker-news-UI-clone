@@ -6,7 +6,7 @@ import TopicsFilterLink from './TopicsFilterLink';
 
 const TopicsSubNav = ({ topics, onTopicClick, onAllClick }) => (
   <div className="tabs is-left">
-      <ul>
+      <ul className="is-size-7">
         <TopicsFilterLink
           topic_name={'all'}
           key={'all'}

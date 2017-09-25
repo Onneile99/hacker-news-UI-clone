@@ -1,43 +1,269 @@
-## Northcoders News
+# Hacker News Frontend clone
 
-Northcoders News is a social news aggregation, web content rating, and discussion website. It is similar to [Reddit](https://www.reddit.com/)
+My own interpretation of the Hacker News Frontend using React and Redux.
 
-Northcoders News has articles which are divided into topics. Each article has user curated ratings and can be up or down voted using the API.
-Users can also add comments about an article. Comments can also be up or down voted. A user can add comments and remove any comments which
-they have added.
+![screencast of the app](http://g.recordit.co/fpqXeb1dps.gif "App screencast")
 
-### Objectives
-1. Pull together all the skills and technologies you have learnt over the past three weeks.
-2. Learn about working with a [C.R.U.D](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) application from a front end perspective.
-3. Make more advanced asynchronous API calls.
-4. Begin to familiarise yourself with the various HTTP response codes and update your UI accordingly.
-5. Learn more common HTTP request types `POST`, `PUT` & `DELETE`
-6. Learn more about interacting with a server using URL queries and request bodies.
+## Getting Started
 
-You will be getting the data from your implementation of the Northcoders News API server.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
-### Stages
+### Prerequisites
 
-1. Have a look at your API endpoints and at Reddit. Think about what data you have available, and how you will structure your application. What routes will your application have? What articles will you choose to display on the main page?
+#### node.js
 
-2. Set up your routing with React Router. Render dummy components and make sure they are rendering in the right place.
+node.js must be installed on your machine (any versions will work; v7.10.0 was used for this project)
 
-3. Think about what data each component will need. Where will it come from? Will any components need to pass data down to dumb components as props? Focus on loading a list of articles for your front page first of all.
+```
+$ node -v // v7.10.0
+```
 
-4. Consider more complex functionality. You should be able to post a new comment on a topic. NB all comments you post from your app will automatically have the username 'northcoder'. Consider whether the comments will appear in order of popularity or by time.
+To install node follow this guide -  https://nodejs.org/en/download/package-manager/#osx
 
-5. You should also be able to delete comments that you have posted. If you try to delete a comment that does not have the author 'northcoder' the API throws an error.
+#### npm
 
-6. Each comment, and each article, can be upvoted or downvoted. See the [API reference](https://northcoders-news-api.herokuapp.com/) which explains how to to this.
+npm is required (any versions will work; v4.2.0 was used for this project)
 
-### Users
+```
+$ npm -v // 4.2.0
+```
 
-Users are available from the API and have already been busy adding comments to the articles!
-There is also a 'northcoder' user. Any comments you add will belong to the 'northcoder' user and you will
-also be able to delete those comments using the API.
+To install npm follow this guide - https://docs.npmjs.com/getting-started/installing-node
 
-### Extra credit
+#### The Hacker New Clone API 
 
-1. Create a route which shows which users have been most active adding articles and comments
-2. Make this route sort the users by how popular they are based on an aggregation of their article and comment vote counts
-3. Implement a filter which re-orders comments based on either the time they were added, or how many votes they have got.
+Which you can find here https://github.com/alanionita/hacker-news-API-clone
+
+### Install
+
+Create a new folder on your machine and clone / fork + clone the repo. 
+
+Open terminal and navigate to the folder storing the code
+
+Install all of the required packages using npm
+
+```
+$ npm i  
+```
+
+### Start the app
+
+#### Start the API 
+
+Use the start instructions fron the API page and make sure the api is running - test it in the browser.
+
+#### Start webpack 
+
+In a separate terminal window start mongod by running the following command.
+
+```
+$ npm run dev
+```
+Make sure no other clients are accessing the 9090 port. If they are locate the processes and stop them.
+
+#### Visually navigating the Frontend
+
+In the browser navigate to http://localhost:9090/ and follow the UI cues. 
+
+## Running the tests
+
+The tests are built using Mocha, Chai, and Supertest
+
+To run the tests, type the following command in your terminal anywhere withing the project folder
+
+```
+$ npm t
+```
+
+The test available: 
+- all Redux actions
+- individual Redux reducers tests: article, articles, comments, topics
+
+### Actions Testing patterns
+
+fetchCommentsRequest() SYNC action
+
+```javascript
+describe('fetchCommentsRequest', () => {
+    it('returns \'FETCH COMMENTS REQUEST\'', () => {
+    expect(actions.fetchCommentsRequest()).to.eql({
+        type: 'FETCH COMMENTS REQUEST'
+    });
+    });
+});
+```
+
+fetchComments() ASYNC action
+
+```javascript
+describe('fetchComments ASYNC', () => {
+    beforeEach(() => {
+    nock.disableNetConnect();
+    });
+
+    afterEach(() => {
+    nock.cleanAll();
+    nock.enableNetConnect();
+    });
+    it('returns correct series of actions and payload if succesful', () => {
+    const articleId = '594b9910c8f51a1e1b7f4243';
+    nock('http://localhost:3000/api')
+        .get(`/articles/${articleId}/comments`)
+        .reply(200, {
+        comments: ['a bunch of comments']
+        });
+
+    const store = mockStore({
+        comments: []
+    });
+
+    const expectedActions = [
+        { type: types.FETCH_COMMENTS_REQUEST },
+        {
+        type: types.FETCH_COMMENTS_SUCCESS,
+        payload: ['a bunch of comments']
+        }
+    ];
+    return store.dispatch(actions.fetchComments(articleId)).then(() => {
+        expect(store.getActions()).to.eql(expectedActions);
+    });
+    });
+});
+```
+
+### Reducers Testing patterns
+
+fetchArticleById() article.reducer.js
+
+```javascript
+describe('fetchArticleById', () => {
+    it('add one article to the new state', () => {
+      const action = actions.fetchArticleByIdSuccess({
+        article: { title: 'test article' }
+      });
+      const newState = reducer(initialState, action);
+      expect(newState.articleById).to.be.an('object');
+      expect(newState.articleById).to.eql({ title: 'test article' });
+    });
+    it('changes the loading property in the new state', () => {
+      const action = actions.fetchArticleByIdRequest();
+      const newState = reducer(initialState, action);
+      expect(newState.loading).to.be.true;
+    });
+    it('returns the error if it fails', () => {
+      const action = actions.fetchArticleByIdFailed('error');
+      const newState = reducer(initialState, action);
+      expect(newState.error).to.eql('error');
+    });
+});
+```
+
+### React Testing
+
+I skipped React testing at this stage because I broke up the components into presentation and container componenets:
+- presentational: render data to html
+- container: fetches data and manages state
+
+Becuase of this structure the action and reducer test were enough to make sure that the contianers where fetching the correct data. I used prop type validation to make sure that the state is mapped and passed down correctly.
+
+## File Structure
+
+    ├── .DS_Store
+    ├── .babelrc
+    ├── .eslintrc
+    ├── README.md
+    ├── config.js
+    ├── out.txt
+    ├── package-lock.json
+    ├── package.json
+    ├── public
+    |  └── index.html
+    ├── spec
+    |  ├── actions.spec.js
+    |  ├── article.reducer.spec.js
+    |  ├── articles.reducer.spec.js
+    |  ├── comments.reducer.spec.js
+    |  └── topics.reducer.spec.js
+    ├── src
+    |  ├── Root.js
+    |  ├── actions
+    |  |  ├── actions.js
+    |  |  └── types.js
+    |  ├── components
+    |  |  ├── containers
+    |  |  |  ├── AppContainer.js
+    |  |  |  └── ArticlePageContainer.js
+    |  |  └── presentational
+    |  |     ├── App.js
+    |  |     ├── ArticleCardFull.js
+    |  |     ├── ArticleCardMini.js
+    |  |     ├── ArticleList.js
+    |  |     ├── ArticlePage.js
+    |  |     ├── ArticleVotingSegment.js
+    |  |     ├── CommentAdd.js
+    |  |     ├── CommentCard.js
+    |  |     ├── CommentList.js
+    |  |     ├── CommentVotingSegment.js
+    |  |     ├── Navbar.js
+    |  |     ├── TopicsFilterLink.js
+    |  |     └── TopicsSubNav.js
+    |  ├── css
+    |  |  ├── bulma.css
+    |  |  └── font-awesome.css
+    |  ├── fonts
+    |  |  ├── FontAwesome.otf
+    |  |  ├── fontawesome-webfont.eot
+    |  |  ├── fontawesome-webfont.svg
+    |  |  ├── fontawesome-webfont.ttf
+    |  |  ├── fontawesome-webfont.woff
+    |  |  └── fontawesome-webfont.woff2
+    |  ├── helpers
+    |  |  └── secondsToTimeString.js
+    |  ├── index.js
+    |  └── reducers
+    |     ├── article.reducer.js
+    |     ├── articles.reducer.js
+    |     ├── comments.reducer.js
+    |     ├── index.js
+    |     └── topics.reducer.js
+    └── webpack.config.js
+
+
+## Built With
+
+### Dependencies
+* [Prop-types](https://www.npmjs.com/package/prop-types) - React prop type validation
+* [React](https://www.npmjs.com/package/react) - JS library for building UIs
+* [React DOM](https://www.npmjs.com/package/react-dom) - React package for working with the DOM
+* [React Redux](https://www.npmjs.com/package/react-redux) - React bindings for Redux
+* [React Router DOM](https://www.npmjs.com/package/react-router-dom) - DOM bindings for React Router v4
+* [React Router Redux](https://www.npmjs.com/package/react-router-redux) - Redux bindings for React Router
+* [React Spinkit](https://www.npmjs.com/package/react-spinkit) - A collection of loading indicators animated with CSS for React
+* [Redux](https://www.npmjs.com/package/redux) - State container for React Apps
+* [Redux Logger](https://www.npmjs.com/package/redux-logger) - Logger for Redux
+
+### Dev Dependencies
+* (global)[Mocha](https://mochajs.org) - Javascript test framework
+* (global)[Chai](http://chaijs.com/guide/) - Test assertion library
+* [Husky](https://github.com/typicode/husky) - Git hooks made easy, used to chain linting and tests before commits
+* [ESLint + JSX, React plugins](http://eslint.org) - Linting utility
+* [Prettier](https://www.npmjs.com/package/prettier) - Code formater, used to enforce linting at save
+* [Axios](https://www.npmjs.com/package/axios) - Promise based HTTP client for the browser and node.js
+* [Babel Core, Loader, es2015 and React presets](https://babeljs.io) - JS compiler
+* [Nock](https://www.npmjs.com/package/nock) - HTTP Server mocking for Node.js
+* [Redux Mock Store](https://www.npmjs.com/package/redux-mock-store) - Mock store for testing Redux
+* [Redux Thunk](https://www.npmjs.com/package/redux-thunk) - Redux thunk middleware
+* [Webpack](https://www.npmjs.com/package/webpack) - webpack, the magical unicorn
+* [Webpack Dev Server](https://www.npmjs.com/package/webpack-dev-server) - webpack server that updates browser on changes
+* [File Loader](https://www.npmjs.com/package/file-loader) - File Loader module for webpack
+* [CSS Loader](https://www.npmjs.com/package/css-loader) - CSS module for webpack
+* [URL Loader](https://www.npmjs.com/package/url-loader) - URL Loader module for webpack
+* [Style Loader](https://www.npmjs.com/package/style-loader) - Style Loader module for webpack
+
+## Authors
+
+* **Alan Ionita** - https://github.com/alanionita
+
+## Acknowledgments
+
+React, Redux, and the magical webpack 🙌

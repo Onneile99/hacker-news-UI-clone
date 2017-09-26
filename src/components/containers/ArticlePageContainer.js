@@ -17,7 +17,11 @@ class ArticlePageContainer extends React.Component {
   render () {
     return (
       <div>
-        <ArticlePage article={this.props.article} comments={this.props.comments}/>
+        <ArticlePage
+          article={this.props.article}
+          comments={this.props.comments}
+          alterCommentVotes={this.props.alterCommentVotes}
+        />
       </div>
     );
   }
@@ -29,6 +33,9 @@ function mapDispatchToProps (dispatch) {
     },
     fetchComments: articleId => {
       dispatch(actions.fetchComments(articleId));
+    },
+    alterCommentVotes: (article_id, vote) => {
+      dispatch(actions.alterCommentVotes(article_id, vote));
     }
   };
 }
@@ -47,6 +54,9 @@ ArticlePageContainer.propTypes = {
   comments: PropTypes.array.isRequired,
   fetchArticleById: PropTypes.func.isRequired,
   fetchComments: PropTypes.func.isRequired,
+  alterCommentVotes: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticlePageContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ArticlePageContainer
+);

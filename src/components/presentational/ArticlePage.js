@@ -7,24 +7,28 @@ import CommentList from './CommentList';
 import CommentAdd from './CommentAdd';
 import ArticleCardFull from './ArticleCardFull';
 
-const ArticlePage = ({ article, comments }) => (
+const ArticlePage = ({ article, comments, alterCommentVotes }) => (
   <div>
     <Navbar />
     <section className="message-body">
-      <ArticleCardFull article={article}/>
+      <ArticleCardFull article={article} />
     </section>
     <section className="message-body">
-      <CommentAdd/>
+      <CommentAdd />
     </section>
     <section className="container is-fluid">
-      <CommentList comments={comments}/>
+      <CommentList
+        comments={comments}
+        alterCommentVotes={alterCommentVotes}
+      />
     </section>
   </div>
 );
 
 ArticlePage.propTypes = {
   article: PropTypes.object.isRequired,
-  comments: PropTypes.array.isRequired
+  comments: PropTypes.array.isRequired,
+  alterCommentVotes: PropTypes.func.isRequired
 };
 
 export default ArticlePage;

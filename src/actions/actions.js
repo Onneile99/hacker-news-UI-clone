@@ -70,6 +70,26 @@ export function fetchArticleById (id) {
     };
 }
 
+export function alterArticleVotesRequest () {
+    return {
+        type: types.ALTER_ARTICLE_VOTES_REQUEST
+    };
+}
+
+export function alterArticleVotesSuccess (article) {
+    return {
+        type: types.ALTER_ARTICLE_VOTES_SUCCESS,
+        payload: article
+    };
+}
+
+export function alterArticleVotesFailed (err) {
+    return {
+        type: types.ALTER_ARTICLE_VOTES_FAILED,
+        payload: err
+    };
+}
+
 // TOPICS
 export function fetchTopics () {
     return function (dispatch) {

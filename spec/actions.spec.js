@@ -140,6 +140,53 @@ describe('ACTIONS', () => {
         });
       });
     });
+    describe('alterArticleVotesRequest', () => {
+      it('returns \'ALTER ARTICLE VOTES REQUEST\'', () => {
+        expect(actions.alterArticleVotesRequest()).to.eql({
+          type: 'ALTER ARTICLE VOTES REQUEST'
+        });
+      });
+    });
+    describe('alterArticleVotesSuccess', () => {
+      it('returns \'ALTER ARTICLE VOTES SUCCESS\' and payload', () => {
+        const input = {
+          articles: [
+            {
+              _id: '594b990fc8f51a1e1b7f4240',
+              body: 'test',
+              belongs_to: '594b9910c8f51a1e1b7f4243',
+              created_by: 'tickle122',
+              votes: 4
+            }
+          ]
+        };
+        expect(actions.alterArticleVotesSuccess(input)).to.eql({
+          type: 'ALTER ARTICLE VOTES SUCCESS',
+          payload: {
+            articles: [
+              {
+                _id: '594b990fc8f51a1e1b7f4240',
+                body: 'test',
+                belongs_to: '594b9910c8f51a1e1b7f4243',
+                created_by: 'tickle122',
+                votes: 4
+              }
+            ]
+          }
+        });
+      });
+    });
+    describe('alterArticleVotesFailed', () => {
+      it('returns \'ALTER ARTICLE VOTES FAILED\' and payload', () => {
+        const err = {
+          err: 'I am an error!'
+        };
+        expect(actions.alterArticleVotesFailed(err)).to.eql({
+          type: 'ALTER ARTICLE VOTES FAILED',
+          payload: err
+        });
+      });
+    });
   });
 
   describe('TOPICS ACTIONS', () => {

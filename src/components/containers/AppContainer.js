@@ -20,6 +20,7 @@ class AppContainer extends React.Component {
         loading={this.props.loading}
         fetchTopicArticles={this.props.fetchTopicArticles}
         fetchArticles={this.props.fetchArticles}
+        alterArticleVotes={this.props.alterArticleVotes}
       />
     );
   }
@@ -35,6 +36,9 @@ function mapDispatchToProps (dispatch) {
     },
     fetchTopicArticles: topic => {
       dispatch(actions.fetchTopicArticles(topic));
+    },
+    alterArticleVotes: (article_id, vote) => {
+      dispatch(actions.alterArticleVotes(article_id, vote));
     }
   };
 }
@@ -53,7 +57,8 @@ AppContainer.propTypes = {
   loading: PropTypes.bool,
   fetchArticles: PropTypes.func.isRequired,
   fetchTopics: PropTypes.func.isRequired,
-  fetchTopicArticles: PropTypes.func.isRequired
+  fetchTopicArticles: PropTypes.func.isRequired,
+  alterArticleVotes: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

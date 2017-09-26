@@ -12,7 +12,8 @@ const App = ({
   articles,
   topics,
   fetchTopicArticles,
-  fetchArticles
+  fetchArticles,
+  alterArticleVotes
 }) => (
   <div>
     <Navbar />
@@ -25,7 +26,7 @@ const App = ({
       />
     </div>
     {loading && <Spinner name="pacman" color="coral" fadeIn="none" />}
-    <ArticleList articles={articles} topics={topics} />
+    <ArticleList articles={articles} topics={topics} alterArticleVotes={alterArticleVotes}/>
   </div>
 );
 
@@ -34,7 +35,8 @@ App.propTypes = {
   topics: PropTypes.array.isRequired,
   loading: PropTypes.bool,
   fetchTopicArticles: PropTypes.func.isRequired,
-  fetchArticles: PropTypes.func.isRequired
+  fetchArticles: PropTypes.func.isRequired,
+  alterArticleVotes: PropTypes.func.isRequired
 };
 
 export default App;

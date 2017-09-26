@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Components
 import ArticleCardMini from './ArticleCardMini';
 
-const ArticleList = ({ articles }) => (
+const ArticleList = ({ articles, alterArticleVotes }) => (
   <div id="ArticleList">
     {articles.map(article => (
       <ArticleCardMini
@@ -13,6 +13,7 @@ const ArticleList = ({ articles }) => (
         id={article._id}
         created_by={article.created_by}
         key={article.title}
+        alterArticleVotes={alterArticleVotes}
       />
     ))}
   </div>
@@ -20,7 +21,8 @@ const ArticleList = ({ articles }) => (
 
 ArticleList.propTypes = {
   articles: PropTypes.array.isRequired,
-  topics: PropTypes.array.isRequired
+  topics: PropTypes.array.isRequired,
+  alterArticleVotes: PropTypes.func.isRequired
 };
 
 export default ArticleList;

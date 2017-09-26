@@ -1,22 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ArticleVotingSegment = ({ votes }) => (
+const ArticleVotingSegment = ({ votes, article_id, alterArticleVotes }) => (
   <div className="tile is-ancestor">
     <div className="tile is-1 is-vertical">
       <div className="tile">
-        <i className="fa fa-chevron-up" aria-hidden="true" />
+        <i onClick={() => alterArticleVotes(article_id, 'up')} className="fa fa-chevron-up" aria-hidden="true" />
       </div>
       <div className="tile">{votes}</div>
       <div className="tile">
-        <i className="fa fa-chevron-down" aria-hidden="true" />
+        <i onClick={() => alterArticleVotes(article_id, 'down')} className="fa fa-chevron-down" aria-hidden="true" />
       </div>
     </div>
   </div>
 );
 
 ArticleVotingSegment.propTypes = {
-  votes: PropTypes.number.isRequired
+  votes: PropTypes.number.isRequired,
+  article_id: PropTypes.string.isRequired,
+  alterArticleVotes: PropTypes.func.isRequired
 };
 
 export default ArticleVotingSegment;

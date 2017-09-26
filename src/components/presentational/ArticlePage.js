@@ -7,11 +7,11 @@ import CommentList from './CommentList';
 import CommentAdd from './CommentAdd';
 import ArticleCardFull from './ArticleCardFull';
 
-const ArticlePage = ({ article, comments, alterCommentVotes }) => (
+const ArticlePage = ({ article, comments, alterCommentVotes, alterArticleVotes }) => (
   <div>
     <Navbar />
     <section className="message-body">
-      <ArticleCardFull article={article} />
+      <ArticleCardFull article={article} alterArticleVotes={alterArticleVotes} />
     </section>
     <section className="message-body">
       <CommentAdd />
@@ -28,7 +28,8 @@ const ArticlePage = ({ article, comments, alterCommentVotes }) => (
 ArticlePage.propTypes = {
   article: PropTypes.object.isRequired,
   comments: PropTypes.array.isRequired,
-  alterCommentVotes: PropTypes.func.isRequired
+  alterCommentVotes: PropTypes.func.isRequired,
+  alterArticleVotes: PropTypes.func.isRequired
 };
 
 export default ArticlePage;

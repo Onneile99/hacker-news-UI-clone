@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 // Components
 import ArticleVotingSegment from './ArticleVotingSegment';
 
-const ArticleCardMini = ({ title, votes, id, created_by }) => {
+const ArticleCardMini = ({ title, votes, id, created_by, alterArticleVotes }) => {
   return (
     <div className="container is-fluid">
       <div className="message-body">
         <article className="media">
           <div className="media-left">
-            <ArticleVotingSegment votes={votes} />
+            <ArticleVotingSegment votes={votes} article_id={id} alterArticleVotes={alterArticleVotes}/>
           </div>
           <Link to={`/articles/${id}`}>
             <div className="media-content">
@@ -29,7 +29,8 @@ ArticleCardMini.propTypes = {
   title: PropTypes.string.isRequired,
   created_by: PropTypes.string.isRequired,
   votes: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  alterArticleVotes: PropTypes.func.isRequired
 };
 
 export default ArticleCardMini;

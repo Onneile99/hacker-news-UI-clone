@@ -38,4 +38,23 @@ describe('COMMENTS REDUCER', () => {
             expect(newState.error).to.eql('error');
         });
     });
+    describe('alterCommentVotes', () => {
+        it('alters comment votes, and add the selected comment to state', () => {
+            const action = actions.alterCommentVotesSuccess({ 'body': 'test comment' });
+            const newState = reducer(initialState, action);
+            expect(newState.comment).to.be.an('object');
+            expect(newState.comment).to.eql({ 'body': 'test comment' });
+        });
+        it('changes the loading property in the new state', (done) => {
+            const action = actions.alterCommentVotesRequest();
+            const newState = reducer(initialState, action);
+            done();
+            expect(newState.loading).to.be.true;
+        });
+        it('returns the error if it fails', () => {
+            const action = actions.alterCommentVotesFailed('error');
+            const newState = reducer(initialState, action);
+            expect(newState.error).to.eql('error');
+        });
+    });
 });

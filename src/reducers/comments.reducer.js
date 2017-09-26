@@ -2,6 +2,7 @@ import * as types from '../actions/types';
 
 export const initialState = {
   data: [],
+  comment: null,
   error: null, 
   loading: false
 };
@@ -26,6 +27,25 @@ function reducer (prevState = initialState, action = {}) {
     const newState = Object.assign({}, prevState);
     newState.error = action.payload;
     newState.data = [];
+    newState.loading = false;
+    return newState;
+  }
+
+  if (action.type === types.ALTER_COMMENT_VOTES_REQUEST) {
+    const newState = Object.assign({}, prevState);
+    newState.loading = true;
+    return newState;
+  }
+
+  if (action.type === types.ALTER_COMMENT_VOTES_SUCCESS) {
+    const newState = Object.assign({}, prevState);
+    newState.comment = Object.assign({}, prevState.article, action.payload);
+    newState.loading = false;
+    return newState;
+  }
+  if (action.type === types.ALTER_COMMENT_VOTES_FAILED) {
+    const newState = Object.assign({}, prevState);
+    newState.error = action.payload;
     newState.loading = false;
     return newState;
   }

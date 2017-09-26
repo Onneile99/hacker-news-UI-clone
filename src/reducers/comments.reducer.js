@@ -39,7 +39,10 @@ function reducer (prevState = initialState, action = {}) {
 
   if (action.type === types.ALTER_COMMENT_VOTES_SUCCESS) {
     const newState = Object.assign({}, prevState);
-    newState.comment = Object.assign({}, prevState.article, action.payload);
+    newState.data = prevState.data.reduce((acc, element) => {
+      element._id === action.payload._id ? acc.push(action.payload) : acc.push(element);
+      return acc;
+    }, []);
     newState.loading = false;
     return newState;
   }

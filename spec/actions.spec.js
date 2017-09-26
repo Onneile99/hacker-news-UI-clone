@@ -187,6 +187,42 @@ describe('ACTIONS', () => {
         });
       });
     });
+    describe('alterArticleVotes ASYNC', () => {
+      beforeEach(() => {
+        nock.disableNetConnect();
+      });
+
+      afterEach(() => {
+        nock.cleanAll();
+        nock.enableNetConnect();
+      });
+      it('returns correct series of actions and payload if succesful', () => {
+        const articleId = '59b2b9e284e9e2b98319eb8a';
+        const vote = 'up';
+        nock('http://localhost:3000/api')
+          .put(`/articles/${articleId}?vote=${vote}`, {})
+          .reply(200, {
+            article: { body: 'test' }
+          });
+
+        const store = mockStore({
+          article: null
+        });
+
+        const expectedActions = [
+          { type: types.ALTER_ARTICLE_VOTES_REQUEST },
+          {
+            type: types.ALTER_ARTICLE_VOTES_SUCCESS,
+            payload: {
+              article: { body: 'test' }
+            }
+          }
+        ];
+        return store.dispatch(actions.alterArticleVotes(articleId, vote)).then(() => {
+          expect(store.getActions()).to.eql(expectedActions);
+        });
+      });
+    });
   });
 
   describe('TOPICS ACTIONS', () => {

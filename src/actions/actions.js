@@ -90,6 +90,19 @@ export function alterArticleVotesFailed (err) {
     };
 }
 
+export function alterArticleVotes (articleId, vote) {
+    return function (dispatch) {
+        dispatch(alterArticleVotesRequest());
+        return axios.put(`${ROOT}/articles/${articleId}?vote=${vote}`, {})
+            .then(res => {
+                dispatch(alterArticleVotesSuccess(res.data));
+            })
+            .catch(err => {
+                dispatch(alterArticleVotesFailed(err));
+            });
+    };
+}
+
 // TOPICS
 export function fetchTopics () {
     return function (dispatch) {

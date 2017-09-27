@@ -258,10 +258,10 @@ export function addCommentFailed (err) {
     };
 }
 
-export function addComment (articleId) {
+export function addComment (articleId, input) {
     return function (dispatch) {
         dispatch(addCommentRequest());
-        return axios.post(`${ROOT}/articles/${articleId}/comments`, {})
+        return axios.post(`${ROOT}/articles/${articleId}/comments`, input)
             .then(res => {
                 dispatch(addCommentSuccess(res.data));
             })

@@ -577,8 +577,9 @@ describe('COMMENTS ACTIONS', () => {
     });
     it('returns correct series of actions and payload if succesful', () => {
       const articleId = '59b2b9e284e9e2b98319eb8a';
+      const input = { body: 'test', _id: '1' };
       nock('http://localhost:3000/api')
-        .post(`/articles/${articleId}/comments`, {})
+        .post(`/articles/${articleId}/comments`, input)
         .reply(200, {
           newComment: { body: 'test', _id: '1' }
         });
@@ -597,7 +598,7 @@ describe('COMMENTS ACTIONS', () => {
         }
       ];
       return store
-        .dispatch(actions.addComment(articleId))
+        .dispatch(actions.addComment(articleId, input))
         .then(() => {
           expect(store.getActions()).to.eql(expectedActions);
         });

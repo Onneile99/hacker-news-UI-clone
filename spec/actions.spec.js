@@ -566,4 +566,41 @@ describe('COMMENTS ACTIONS', () => {
       });
     });
   });
+  describe('addComment ASYNC', () => {
+    beforeEach(() => {
+      nock.disableNetConnect();
+    });
+
+    afterEach(() => {
+      nock.cleanAll();
+      nock.enableNetConnect();
+    });
+    it('returns correct series of actions and payload if succesful', () => {
+      const articleId = '59b2b9e284e9e2b98319eb8a';
+      nock('http://localhost:3000/api')
+        .post(`/articles/${articleId}/comments`, {})
+        .reply(200, {
+          newComment: { body: 'test', _id: '1' }
+        });
+
+      const store = mockStore({
+        newComment: null
+      });
+
+      const expectedActions = [
+        { type: types.ADD_COMMENT_REQUEST },
+        {
+          type: types.ADD_COMMENT_SUCCESS,
+          payload: {
+            newComment: { body: 'test', _id: '1' }
+          }
+        }
+      ];
+      return store
+        .dispatch(actions.addComment(articleId))
+        .then(() => {
+          expect(store.getActions()).to.eql(expectedActions);
+        });
+    });
+  });
 });

@@ -257,3 +257,16 @@ export function addCommentFailed (err) {
         payload: err
     };
 }
+
+export function addComment (articleId) {
+    return function (dispatch) {
+        dispatch(addCommentRequest());
+        return axios.post(`${ROOT}/articles/${articleId}/comments`, {})
+            .then(res => {
+                dispatch(addCommentSuccess(res.data));
+            })
+            .catch(err => {
+                dispatch(addCommentFailed(err));
+            });
+    };
+}

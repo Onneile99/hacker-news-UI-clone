@@ -53,6 +53,27 @@ function reducer (prevState = initialState, action = {}) {
     return newState;
   }
 
+  if (action.type === types.ADD_COMMENT_REQUEST) {
+    const newState = Object.assign({}, prevState);
+    newState.loading = true;
+    return newState;
+  }
+
+  if (action.type === types.ADD_COMMENT_SUCCESS) {
+    const newState = Object.assign({}, prevState);
+    newState.data = prevState.data.concat([action.payload.newComment]);
+    newState.loading = false;
+    return newState;
+  }
+
+  if (action.type === types.ADD_COMMENT_FAILED) {
+    const newState = Object.assign({}, prevState);
+    newState.error = action.payload;
+    newState.data = prevState.data || [];
+    newState.loading = false;
+    return newState;
+  }
+
   return prevState;
 }
 

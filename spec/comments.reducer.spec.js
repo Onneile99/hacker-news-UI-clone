@@ -43,7 +43,10 @@ describe('COMMENTS REDUCER', () => {
       const newState = reducer(prevState, action);
       expect(newState.data).to.be.an('array');
       expect(newState.data.length).to.equal(2);
-      expect(newState.data).to.eql([{ _id: 1, votes: 1 }, { _id: 2, votes: 3 }]);
+      expect(newState.data).to.eql([
+        { _id: 1, votes: 1 },
+        { _id: 2, votes: 3 }
+      ]);
     });
     it('changes the loading property in the new state', done => {
       const action = actions.alterCommentVotesRequest();
@@ -53,6 +56,40 @@ describe('COMMENTS REDUCER', () => {
     });
     it('returns the error if it fails', () => {
       const action = actions.alterCommentVotesFailed('error');
+      const newState = reducer(initialState, action);
+      expect(newState.error).to.eql('error');
+    });
+  });
+
+  describe('addComment', () => {
+    it('posts comment, and adds the new comment to state', () => {
+      const payload = { newComment: {_id: 3, body: 'three\'s a crowd' }};
+      const action = actions.addCommentSuccess(payload);
+      const prevState = {
+        data: [
+          { _id: 1, body: 'Numero uno, yeah!' },
+          { _id: 2, body: 'I am number dos' }
+        ],
+        error: null,
+        loading: false
+      };
+      const newState = reducer(prevState, action);
+      expect(newState.data).to.be.an('array');
+      expect(newState.data.length).to.equal(3);
+      expect(newState.data).to.eql([
+        { _id: 1, body: 'Numero uno, yeah!' },
+        { _id: 2, body: 'I am number dos' },
+        { _id: 3, body: 'three\'s a crowd' }
+      ]);
+    });
+    it('changes the loading property in the new state', done => {
+      const action = actions.addCommentRequest();
+      const newState = reducer(initialState, action);
+      done();
+      expect(newState.loading).to.be.true;
+    });
+    it('returns the error if it fails', () => {
+      const action = actions.addCommentFailed('error');
       const newState = reducer(initialState, action);
       expect(newState.error).to.eql('error');
     });

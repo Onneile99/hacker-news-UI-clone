@@ -2,7 +2,6 @@ import * as types from '../actions/types';
 
 export const initialState = {
   data: [],
-  selectedArticle: null,
   error: null, 
   loading: false
 };

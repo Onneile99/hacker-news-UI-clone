@@ -237,3 +237,23 @@ export function alterCommentVotes (commentId, vote) {
             });
     };
 }
+
+export function addCommentRequest () {
+    return {
+        type: types.ADD_COMMENT_REQUEST
+    };
+}
+
+export function addCommentSuccess (comment) {
+    return {
+        type: types.ADD_COMMENT_SUCCESS,
+        payload: comment
+    };
+}
+
+export function addCommentFailed (err) {
+    return {
+        type: types.ADD_COMMENT_FAILED,
+        payload: err
+    };
+}

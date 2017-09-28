@@ -597,11 +597,9 @@ describe('COMMENTS ACTIONS', () => {
           }
         }
       ];
-      return store
-        .dispatch(actions.addComment(articleId, input))
-        .then(() => {
-          expect(store.getActions()).to.eql(expectedActions);
-        });
+      return store.dispatch(actions.addComment(articleId, input)).then(() => {
+        expect(store.getActions()).to.eql(expectedActions);
+      });
     });
   });
   describe('deleteCommentRequest', () => {
@@ -646,6 +644,74 @@ describe('COMMENTS ACTIONS', () => {
       expect(actions.deleteCommentFailed(err)).to.eql({
         type: 'DELETE COMMENT FAILED',
         payload: err
+      });
+    });
+  });
+  describe('deleteComment ASYNC', () => {
+    beforeEach(() => {
+      nock.disableNetConnect();
+    });
+
+    afterEach(() => {
+      nock.cleanAll();
+      nock.enableNetConnect();
+    });
+    it('returns correct series of actions and payload if succesful', () => {
+      const commentId = '59b2b9e284e9e2b98319ebae';
+      nock('http://localhost:3000/api')
+        .delete(`/comments/${commentId}`)
+        .reply(200, {
+          message:
+            'The comment with id: 59b2b9e284e9e2b98319ebae has been removed',
+          deletedComment: {
+            _id: '59b2b9e284e9e2b98319ebae',
+            body:
+              'Jobojo gaidu govahla zuizvap vefkarsi ollovew pe vife rieri iggeffe fiez za nu ofmiw ib. Newhu zegaco irooje te fas iwu uhuemos hesuvak finem cadew noaja ja efdi wowvohcid abi baet movohepo. Sephe ezu ewamuf sa ketja towis to zujmohad zobwecos umbe deifukol vodu gumez eni duur adliet gadto zobu. Jap bevaav fu tesnu beilak hosuroz tesas dul hac toljuj tu midod waskitu.',
+            belongs_to: '59b2b9e284e9e2b98319eb8a',
+            __v: 0,
+            created_by: 'cooljmessy',
+            votes: 35,
+            created_at: 1504749798000
+          }
+        });
+
+      const store = mockStore({
+        comments: [
+          {
+            _id: '59b2b9e284e9e2b98319ebae',
+            body:
+              'Jobojo gaidu govahla zuizvap vefkarsi ollovew pe vife rieri iggeffe fiez za nu ofmiw ib. Newhu zegaco irooje te fas iwu uhuemos hesuvak finem cadew noaja ja efdi wowvohcid abi baet movohepo. Sephe ezu ewamuf sa ketja towis to zujmohad zobwecos umbe deifukol vodu gumez eni duur adliet gadto zobu. Jap bevaav fu tesnu beilak hosuroz tesas dul hac toljuj tu midod waskitu.',
+            belongs_to: '59b2b9e284e9e2b98319eb8a',
+            __v: 0,
+            created_by: 'cooljmessy',
+            votes: 35,
+            created_at: 1504749798000
+          }
+        ]
+      });
+
+      const expectedActions = [
+        { type: types.DELETE_COMMENT_REQUEST },
+        {
+          type: types.DELETE_COMMENT_SUCCESS,
+          payload: {
+            message:
+              'The comment with id: 59b2b9e284e9e2b98319ebae has been removed',
+            deletedComment: {
+              _id: '59b2b9e284e9e2b98319ebae',
+              body:
+                'Jobojo gaidu govahla zuizvap vefkarsi ollovew pe vife rieri iggeffe fiez za nu ofmiw ib. Newhu zegaco irooje te fas iwu uhuemos hesuvak finem cadew noaja ja efdi wowvohcid abi baet movohepo. Sephe ezu ewamuf sa ketja towis to zujmohad zobwecos umbe deifukol vodu gumez eni duur adliet gadto zobu. Jap bevaav fu tesnu beilak hosuroz tesas dul hac toljuj tu midod waskitu.',
+              belongs_to: '59b2b9e284e9e2b98319eb8a',
+              __v: 0,
+              created_by: 'cooljmessy',
+              votes: 35,
+              created_at: 1504749798000
+            }
+          }
+        }
+      ];
+      return store.dispatch(actions.deleteComment(commentId)).then(() => {
+        expect(store.getActions()).to.eql(expectedActions);
       });
     });
   });

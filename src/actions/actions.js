@@ -290,3 +290,16 @@ export function deleteCommentFailed (err) {
         payload: err
     };
 }
+
+export function deleteComment (commentId) {
+    return function (dispatch) {
+        dispatch(deleteCommentRequest());
+        return axios.delete(`${ROOT}/comments/${commentId}`)
+            .then(res => {
+                dispatch(deleteCommentSuccess(res.data));
+            })
+            .catch(err => {
+                dispatch(deleteCommentFailed(err));
+            });
+    };
+}

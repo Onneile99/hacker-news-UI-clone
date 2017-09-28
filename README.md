@@ -241,6 +241,7 @@ Becuase of this structure the action and reducer test were enough to make sure t
 * [React Spinkit](https://www.npmjs.com/package/react-spinkit) - A collection of loading indicators animated with CSS for React
 * [Redux](https://www.npmjs.com/package/redux) - State container for React Apps
 * [Redux Logger](https://www.npmjs.com/package/redux-logger) - Logger for Redux
+* [Redux Form](https://redux-form.com) - A better way to manage your form state in Redux
 
 ### Dev Dependencies
 * (global)[Mocha](https://mochajs.org) - Javascript test framework

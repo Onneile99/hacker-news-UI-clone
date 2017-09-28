@@ -54,9 +54,12 @@ function mapDispatchToProps (dispatch) {
 }
 
 function mapStateToProps (state) {
+  const sortedComments = state.comments.data.sort(function (a, b) {
+    return b.votes - a.votes;
+  });
   return {
     article: state.article.articleById,
-    comments: state.comments.data,
+    comments: sortedComments,
     loading: state.loading,
   };
 }

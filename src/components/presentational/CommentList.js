@@ -6,7 +6,7 @@ import CommentCard from './CommentCard';
 
 const CommentList = ({ comments, alterCommentVotes, deleteComment }) => (
   <div id="CommentList">
-    all {comments.length} comments
+    all {comments.length} comments | sorted by: votes 
     {comments.map(comment => (
       <CommentCard
         body={comment.body}

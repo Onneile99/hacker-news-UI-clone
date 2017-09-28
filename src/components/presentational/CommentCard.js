@@ -32,7 +32,7 @@ const CommentCard = props => {
         <div className="media-content is-size-7 has-text-black">
           <p className="subtitle is-7">
             {`submitted ${differenceString} ago by ${created_by}, ${votes} votes | `}
-            <a onClick={() => deleteComment(comment_id)}>delete</a>
+            <a onClick={() => deleteComment(comment_id, created_by)}>delete</a>
           </p>
           {body}
         </div>

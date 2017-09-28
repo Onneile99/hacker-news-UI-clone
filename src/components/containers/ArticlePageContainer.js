@@ -47,8 +47,8 @@ function mapDispatchToProps (dispatch) {
     addComment: (article_id, values = {}) => {
       dispatch(actions.addComment(article_id, values));
     },
-    deleteComment: (comment_id) => {
-      dispatch(actions.deleteComment(comment_id));
+    deleteComment: (comment_id, user) => {
+      dispatch(actions.deleteComment(comment_id, user));
     }  
   };
 }

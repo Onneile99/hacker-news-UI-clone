@@ -63,7 +63,7 @@ describe('COMMENTS REDUCER', () => {
 
   describe('addComment', () => {
     it('posts comment, and adds the new comment to state', () => {
-      const payload = { newComment: {_id: 3, body: 'three\'s a crowd' }};
+      const payload = { newComment: { _id: 3, body: 'three\'s a crowd' } };
       const action = actions.addCommentSuccess(payload);
       const prevState = {
         data: [
@@ -90,6 +90,41 @@ describe('COMMENTS REDUCER', () => {
     });
     it('returns the error if it fails', () => {
       const action = actions.addCommentFailed('error');
+      const newState = reducer(initialState, action);
+      expect(newState.error).to.eql('error');
+    });
+  });
+  describe('deleteComment', () => {
+    it('delete comment, and remove comment to state', () => {
+      const payload = {
+        message:
+          'The comment with id: 2 has been removed',
+        deletedComment: { _id: 2, body: 'I am number dos' }
+      };
+      const action = actions.deleteCommentSuccess(payload);
+      const prevState = {
+        data: [
+          { _id: 1, body: 'Numero uno, yeah!' },
+          { _id: 2, body: 'I am number dos' }
+        ],
+        error: null,
+        loading: false
+      };
+      const newState = reducer(prevState, action);
+      expect(newState.data).to.be.an('array');
+      expect(newState.data.length).to.equal(1);
+      expect(newState.data).to.eql([
+        { _id: 1, body: 'Numero uno, yeah!' }
+      ]);
+    });
+    it('changes the loading property in the new state', done => {
+      const action = actions.deleteCommentRequest();
+      const newState = reducer(initialState, action);
+      done();
+      expect(newState.loading).to.be.true;
+    });
+    it('returns the error if it fails', () => {
+      const action = actions.deleteCommentFailed('error');
       const newState = reducer(initialState, action);
       expect(newState.error).to.eql('error');
     });

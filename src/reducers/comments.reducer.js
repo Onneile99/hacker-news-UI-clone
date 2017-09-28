@@ -72,6 +72,29 @@ function reducer (prevState = initialState, action = {}) {
     newState.loading = false;
     return newState;
   }
+  if (action.type === types.DELETE_COMMENT_REQUEST) {
+    const newState = Object.assign({}, prevState);
+    newState.loading = true;
+    return newState;
+  }
+
+  if (action.type === types.DELETE_COMMENT_SUCCESS) {
+    const newState = Object.assign({}, prevState);
+    newState.data = prevState.data.reduce((acc, element) => {
+      if (element._id !== action.payload.deletedComment._id) acc.push(element);
+      return acc;
+    }, []);
+    newState.loading = false;
+    return newState;
+  }
+
+  if (action.type === types.DELETE_COMMENT_FAILED) {
+    const newState = Object.assign({}, prevState);
+    newState.error = action.payload;
+    newState.data = prevState.data || [];
+    newState.loading = false;
+    return newState;
+  }
 
   return prevState;
 }

@@ -604,4 +604,49 @@ describe('COMMENTS ACTIONS', () => {
         });
     });
   });
+  describe('deleteCommentRequest', () => {
+    it('returns \'DELETE COMMENT REQUEST\'', () => {
+      expect(actions.deleteCommentRequest()).to.eql({
+        type: 'DELETE COMMENT REQUEST'
+      });
+    });
+  });
+  describe('deleteCommentSuccess', () => {
+    it('returns \'DELETE COMMENT SUCCESS\' and payload', () => {
+      const input = {
+        message: 'sucess',
+        deletedComment: {
+          _id: '594b990fc8f51a1e1b7f4240',
+          body: 'Football',
+          belongs_to: '594b9910c8f51a1e1b7f4243',
+          created_by: 'tickle122',
+          votes: 4
+        }
+      };
+      expect(actions.deleteCommentSuccess(input)).to.eql({
+        type: 'DELETE COMMENT SUCCESS',
+        payload: {
+          message: 'sucess',
+          deletedComment: {
+            _id: '594b990fc8f51a1e1b7f4240',
+            body: 'Football',
+            belongs_to: '594b9910c8f51a1e1b7f4243',
+            created_by: 'tickle122',
+            votes: 4
+          }
+        }
+      });
+    });
+  });
+  describe('deleteCommentFailed', () => {
+    it('returns \'DELETE COMMENT FAILED\' and payload', () => {
+      const err = {
+        err: 'I am an error!'
+      };
+      expect(actions.deleteCommentFailed(err)).to.eql({
+        type: 'DELETE COMMENT FAILED',
+        payload: err
+      });
+    });
+  });
 });

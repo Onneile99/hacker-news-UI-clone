@@ -270,3 +270,23 @@ export function addComment (articleId, input) {
             });
     };
 }
+
+export function deleteCommentRequest () {
+    return {
+        type: types.DELETE_COMMENT_REQUEST
+    };
+}
+
+export function deleteCommentSuccess (comment) {
+    return {
+        type: types.DELETE_COMMENT_SUCCESS,
+        payload: comment
+    };
+}
+
+export function deleteCommentFailed (err) {
+    return {
+        type: types.DELETE_COMMENT_FAILED,
+        payload: err
+    };
+}

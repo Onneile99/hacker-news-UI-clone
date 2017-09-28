@@ -7,29 +7,42 @@ import CommentList from './CommentList';
 import CommentAdd from './CommentAdd';
 import ArticleCardFull from './ArticleCardFull';
 
-const ArticlePage = ({ article, comments, alterCommentVotes, alterArticleVotes }) => (
-  <div>
-    <Navbar />
-    <section className="message-body">
-      <ArticleCardFull article={article} alterArticleVotes={alterArticleVotes} />
-    </section>
-    <section className="message-body">
-      <CommentAdd />
-    </section>
-    <section className="container is-fluid">
-      <CommentList
-        comments={comments}
-        alterCommentVotes={alterCommentVotes}
-      />
-    </section>
-  </div>
-);
+const ArticlePage = props => {
+  const {
+    article,
+    comments,
+    alterCommentVotes,
+    alterArticleVotes,
+    addComment
+  } = props;
+  return (
+    <div>
+      <Navbar />
+      <section className="message-body">
+        <ArticleCardFull
+          article={article}
+          alterArticleVotes={alterArticleVotes}
+        />
+      </section>
+      <section className="message-body">
+        <CommentAdd addComment={addComment} article={article}/>
+      </section>
+      <section className="container is-fluid">
+        <CommentList
+          comments={comments}
+          alterCommentVotes={alterCommentVotes}
+        />
+      </section>
+    </div>
+  );
+};
 
 ArticlePage.propTypes = {
   article: PropTypes.object.isRequired,
   comments: PropTypes.array.isRequired,
   alterCommentVotes: PropTypes.func.isRequired,
-  alterArticleVotes: PropTypes.func.isRequired
+  alterArticleVotes: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired
 };
 
 export default ArticlePage;

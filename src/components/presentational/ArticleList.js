@@ -14,6 +14,7 @@ const ArticleList = ({ articles, alterArticleVotes }) => (
         created_by={article.created_by}
         key={article.title}
         alterArticleVotes={alterArticleVotes}
+        belongs_to={article.belongs_to}
       />
     ))}
   </div>

@@ -291,10 +291,10 @@ export function deleteCommentFailed (err) {
     };
 }
 
-export function deleteComment (commentId) {
+export function deleteComment (commentId, user) {
     return function (dispatch) {
         dispatch(deleteCommentRequest());
-        return axios.delete(`${ROOT}/comments/${commentId}`)
+        return axios.delete(`${ROOT}/comments/${commentId}?user=${user}`)
             .then(res => {
                 dispatch(deleteCommentSuccess(res.data));
             })

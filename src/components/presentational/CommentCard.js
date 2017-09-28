@@ -5,7 +5,16 @@ import { secondsToTimeString } from '../../helpers/secondsToTimeString';
 // Components
 import CommentVotingSegment from './CommentVotingSegment';
 
-const CommentCard = ({ body, votes, created_by, created_at, alterCommentVotes, comment_id}) => {
+const CommentCard = props => {
+  const {
+    body,
+    votes,
+    created_by,
+    created_at,
+    alterCommentVotes,
+    comment_id,
+    deleteComment
+  } = props;
   const currentDate = Date.now();
   const differenceString = secondsToTimeString(
     (currentDate - created_at) / 1000.0
@@ -22,7 +31,8 @@ const CommentCard = ({ body, votes, created_by, created_at, alterCommentVotes, c
         </div>
         <div className="media-content is-size-7 has-text-black">
           <p className="subtitle is-7">
-            {`submitted ${differenceString} ago by ${created_by}, ${votes} votes`}
+            {`submitted ${differenceString} ago by ${created_by}, ${votes} votes | `}
+            <a onClick={() => deleteComment(comment_id)}>delete</a>
           </p>
           {body}
         </div>
@@ -37,7 +47,8 @@ CommentCard.propTypes = {
   votes: PropTypes.number.isRequired,
   created_at: PropTypes.number.isRequired,
   created_by: PropTypes.string.isRequired,
-  alterCommentVotes: PropTypes.func.isRequired
+  alterCommentVotes: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired
 };
 
 export default CommentCard;

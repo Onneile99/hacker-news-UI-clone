@@ -23,6 +23,7 @@ class ArticlePageContainer extends React.Component {
           alterCommentVotes={this.props.alterCommentVotes}
           alterArticleVotes={this.props.alterArticleVotes}
           addComment={this.props.addComment}
+          deleteComment={this.props.deleteComment}
         />
       </div>
     );
@@ -45,6 +46,9 @@ function mapDispatchToProps (dispatch) {
     },
     addComment: (article_id, values = {}) => {
       dispatch(actions.addComment(article_id, values));
+    },
+    deleteComment: (comment_id) => {
+      dispatch(actions.deleteComment(comment_id));
     }  
   };
 }
@@ -65,7 +69,8 @@ ArticlePageContainer.propTypes = {
   fetchComments: PropTypes.func.isRequired,
   alterCommentVotes: PropTypes.func.isRequired,
   alterArticleVotes: PropTypes.func.isRequired,
-  addComment: PropTypes.func.isRequired
+  addComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(

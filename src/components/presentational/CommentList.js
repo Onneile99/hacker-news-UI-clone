@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // Components
 import CommentCard from './CommentCard';
 
-const CommentList = ({ comments, alterCommentVotes }) => (
+const CommentList = ({ comments, alterCommentVotes, deleteComment }) => (
   <div id="CommentList">
     all {comments.length} comments
     {comments.map(comment => (
@@ -16,6 +16,7 @@ const CommentList = ({ comments, alterCommentVotes }) => (
         key={comment._id}
         comment_id={comment._id}
         alterCommentVotes={alterCommentVotes}
+        deleteComment={deleteComment}
       />
     ))}
   </div>
@@ -24,6 +25,7 @@ const CommentList = ({ comments, alterCommentVotes }) => (
 CommentList.propTypes = {
   comments: PropTypes.array.isRequired,
   alterCommentVotes: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired
 };
 
 export default CommentList;

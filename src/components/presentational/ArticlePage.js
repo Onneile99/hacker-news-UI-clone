@@ -13,7 +13,8 @@ const ArticlePage = props => {
     comments,
     alterCommentVotes,
     alterArticleVotes,
-    addComment
+    addComment,
+    deleteComment
   } = props;
   return (
     <div>
@@ -31,6 +32,7 @@ const ArticlePage = props => {
         <CommentList
           comments={comments}
           alterCommentVotes={alterCommentVotes}
+          deleteComment={deleteComment}
         />
       </section>
     </div>
@@ -42,7 +44,8 @@ ArticlePage.propTypes = {
   comments: PropTypes.array.isRequired,
   alterCommentVotes: PropTypes.func.isRequired,
   alterArticleVotes: PropTypes.func.isRequired,
-  addComment: PropTypes.func.isRequired
+  addComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired
 };
 
 export default ArticlePage;

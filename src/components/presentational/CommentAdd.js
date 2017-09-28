@@ -4,8 +4,11 @@ import { Field, reduxForm } from 'redux-form';
 
 
 let CommentAdd = props => {
-  const {handleSubmit, article, addComment} = props;
-  const submit = (values) => addComment(article._id, values);
+  const {handleSubmit, reset, article, addComment} = props;
+  const submit = (values) => {
+    addComment(article._id, values);
+    reset();
+  };
   return (
     <div className="media-content">
       <form onSubmit={handleSubmit(submit)}>
@@ -32,7 +35,8 @@ let CommentAdd = props => {
 CommentAdd.propTypes = {
   addComment: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  article: PropTypes.object.isRequired
+  reset: PropTypes.func.isRequired,
+  article: PropTypes.object.isRequired,
 };
 
 CommentAdd = reduxForm({

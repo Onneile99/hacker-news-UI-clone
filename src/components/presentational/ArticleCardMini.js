@@ -8,18 +8,22 @@ import ArticleVotingSegment from './ArticleVotingSegment';
 const ArticleCardMini = props => {
   const { title, votes, id, created_by, alterArticleVotes, belongs_to } = props;
   return (
-    <div className="container is-fluid">
-      <div className="message-body">
-        <article className="media">
-          <div className="media-left">
-            <ArticleVotingSegment votes={votes} article_id={id} alterArticleVotes={alterArticleVotes}/>
-          </div>
+    <div className="message-body">
+      <div className="media">
+        <aside className="media-left">
+          <ArticleVotingSegment
+            votes={votes}
+            article_id={id}
+            alterArticleVotes={alterArticleVotes}
+          />
+        </aside>
+        <article className="media-content">
           <Link to={`/articles/${id}`}>
-            <div className="media-content">
-              <h2 className="is-size-5">{title}</h2>
-              <p className="subtitle is-7">submitted by {created_by} on {belongs_to}</p>
-            </div>
+            <h2 className="is-size-5">{title}</h2>
           </Link>
+          <p className="subtitle is-7">
+            submitted by {created_by} on {belongs_to}
+          </p>
         </article>
       </div>
     </div>

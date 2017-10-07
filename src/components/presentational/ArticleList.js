@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ArticleCardMini from './ArticleCardMini';
 
 const ArticleList = ({ articles, alterArticleVotes }) => (
-  <div id="ArticleList">
+  <section id="ArticleList">
     {articles.map(article => (
       <ArticleCardMini
         title={article.title}
@@ -17,7 +17,7 @@ const ArticleList = ({ articles, alterArticleVotes }) => (
         belongs_to={article.belongs_to}
       />
     ))}
-  </div>
+  </section>
 );
 
 ArticleList.propTypes = {

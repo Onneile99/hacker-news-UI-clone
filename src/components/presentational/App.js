@@ -18,15 +18,15 @@ const App = props => {
   } = props;
   return (
     <main>
-      <Navbar />
-      <section>
+      <header>
+        <Navbar />
         {loading && <Spinner name="pacman" color="coral" fadeIn="none" />}
         <TopicsSubNav
           topics={topics}
           onTopicClick={fetchTopicArticles}
           onAllClick={fetchArticles}
         />
-      </section>
+      </header>
       {loading && <Spinner name="pacman" color="coral" fadeIn="none" />}
       <ArticleList
         articles={articles}

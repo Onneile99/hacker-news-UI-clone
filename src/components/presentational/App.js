@@ -7,28 +7,35 @@ import ArticleList from './ArticleList';
 import TopicsSubNav from './TopicsSubNav';
 import Navbar from './Navbar';
 
-const App = ({
-  loading,
-  articles,
-  topics,
-  fetchTopicArticles,
-  fetchArticles,
-  alterArticleVotes
-}) => (
-  <div>
-    <Navbar />
-    <div>
+const App = props => {
+  const {
+    loading,
+    articles,
+    topics,
+    fetchTopicArticles,
+    fetchArticles,
+    alterArticleVotes
+  } = props;
+  return (
+    <main>
+      <Navbar />
+      <section>
+        {loading && <Spinner name="pacman" color="coral" fadeIn="none" />}
+        <TopicsSubNav
+          topics={topics}
+          onTopicClick={fetchTopicArticles}
+          onAllClick={fetchArticles}
+        />
+      </section>
       {loading && <Spinner name="pacman" color="coral" fadeIn="none" />}
-      <TopicsSubNav
+      <ArticleList
+        articles={articles}
         topics={topics}
-        onTopicClick={fetchTopicArticles}
-        onAllClick={fetchArticles}
+        alterArticleVotes={alterArticleVotes}
       />
-    </div>
-    {loading && <Spinner name="pacman" color="coral" fadeIn="none" />}
-    <ArticleList articles={articles} topics={topics} alterArticleVotes={alterArticleVotes}/>
-  </div>
-);
+    </main>
+  );
+};
 
 App.propTypes = {
   articles: PropTypes.array.isRequired,

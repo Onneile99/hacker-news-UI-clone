@@ -13,7 +13,7 @@ const Navbar = () => (
     role="navigation"
     aria-label="main navigation"
   >
-    <div className="navbar-brand">
+    <section className="navbar-brand">
       <div className="navbar-item">
         <img
           className="image is-24x24"
@@ -22,14 +22,14 @@ const Navbar = () => (
         />
       </div>
       <div className="navbar-item">
-        <p
+        <a
           className="is-size-5 has-text-black has-text-weight-bold"
           style={logoStyle}
         >
           <Link to="/">Hacker News Clone</Link>
-        </p>
+        </a>
       </div>
-    </div>
+    </section>
   </nav>
 );
 

@@ -10,16 +10,14 @@ const ArticleCardMini = props => {
   return (
     <div className="message-body">
       <div className="media">
-        <aside className="media-left">
-          <ArticleVotingSegment
-            votes={votes}
-            article_id={id}
-            alterArticleVotes={alterArticleVotes}
-          />
-        </aside>
+        <ArticleVotingSegment
+          votes={votes}
+          article_id={id}
+          alterArticleVotes={alterArticleVotes}
+        />
         <article className="media-content">
           <Link to={`/articles/${id}`}>
-            <h2 className="is-size-5">{title}</h2>
+            <p className="is-size-5">{title}</p>
           </Link>
           <p className="subtitle is-7">
             submitted by {created_by} on {belongs_to}

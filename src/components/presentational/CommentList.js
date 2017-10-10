@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import CommentCard from './CommentCard';
 
 const CommentList = ({ comments, alterCommentVotes, deleteComment }) => (
-  <div id="CommentList">
-    all {comments.length} comments | sorted by: votes 
+  <section className="container is-fluid">
+    all {comments.length} comments | sorted by: votes
     {comments.map(comment => (
       <CommentCard
         body={comment.body}
@@ -19,7 +19,7 @@ const CommentList = ({ comments, alterCommentVotes, deleteComment }) => (
         deleteComment={deleteComment}
       />
     ))}
-  </div>
+  </section>
 );
 
 CommentList.propTypes = {

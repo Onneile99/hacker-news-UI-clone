@@ -23,19 +23,19 @@ const CommentCard = props => {
   return (
     <div className="message-body">
       <div className="media">
-        <div className="media-left">
+        <aside className="media-left">
           <CommentVotingSegment
             comment_id={comment_id}
             alterCommentVotes={alterCommentVotes}
           />
-        </div>
-        <div className="media-content is-size-7 has-text-black">
-          <p className="subtitle is-7">
+        </aside>
+        <article className="media-content is-size-7 has-text-black">
+          <aside className="subtitle is-7">
             {`submitted ${differenceString} ago by ${created_by}, ${votes} votes | `}
             <a onClick={() => deleteComment(comment_id, created_by)}>delete</a>
-          </p>
+          </aside>
           {body}
-        </div>
+        </article>
       </div>
     </div>
   );

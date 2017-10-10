@@ -22,12 +22,12 @@ const Navbar = () => (
         />
       </div>
       <div className="navbar-item">
-        <a
+        <p
           className="is-size-5 has-text-black has-text-weight-bold"
           style={logoStyle}
         >
           <Link to="/">Hacker News Clone</Link>
-        </a>
+        </p>
       </div>
     </section>
   </nav>

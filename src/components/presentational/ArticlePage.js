@@ -17,25 +17,19 @@ const ArticlePage = props => {
     deleteComment
   } = props;
   return (
-    <div>
+    <main>
       <Navbar />
-      <section className="message-body">
-        <ArticleCardFull
-          article={article}
-          alterArticleVotes={alterArticleVotes}
-        />
-      </section>
-      <section className="message-body">
-        <CommentAdd addComment={addComment} article={article}/>
-      </section>
-      <section className="container is-fluid">
-        <CommentList
-          comments={comments}
-          alterCommentVotes={alterCommentVotes}
-          deleteComment={deleteComment}
-        />
-      </section>
-    </div>
+      <ArticleCardFull
+        article={article}
+        alterArticleVotes={alterArticleVotes}
+      />
+      <CommentAdd addComment={addComment} article={article} />
+      <CommentList
+        comments={comments}
+        alterCommentVotes={alterCommentVotes}
+        deleteComment={deleteComment}
+      />
+    </main>
   );
 };
 

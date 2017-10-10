@@ -21,7 +21,6 @@ const Root = ({ store }) => (
       <Switch>
         <Route exact={true} path="/articles/:article_id" component={ArticlePageContainer} />
         <Route path="/" component={AppContainer} />
-        <Route exact={true} path="/" component={App} />
         <Route path="/topics/(:topic_name)/articles" component={App} />
       </Switch>
     </Router>

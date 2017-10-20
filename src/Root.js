@@ -1,19 +1,13 @@
-// REACT
+import App from './components/presentational/App';
+import AppContainer from './components/containers/AppContainer';
+import ArticlePageContainer from './components/containers/ArticlePageContainer';
+
 import React from 'react';
 import PropTypes from 'prop-types';
-
-// REACT ROUTER
 import { Router, Route, Switch } from 'react-router-dom';
-
-// REDUX
 import { Provider } from 'react-redux';
 import createBrowserHistory from 'history/createBrowserHistory';
 const history = createBrowserHistory();
-
-// COMPONENTS
-import AppContainer from './components/containers/AppContainer';
-import App from './components/presentational/App';
-import ArticlePageContainer from './components/containers/ArticlePageContainer';
 
 const Root = ({ store }) => (
   <Provider store={store}>

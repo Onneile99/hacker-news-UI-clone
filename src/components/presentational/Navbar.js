@@ -10,7 +10,6 @@ const logoStyle = {
 const Navbar = () => (
   <nav
     className="navbar is-danger"
-    role="navigation"
     aria-label="main navigation"
   >
     <section className="navbar-brand">
@@ -19,6 +18,7 @@ const Navbar = () => (
           className="image is-24x24"
           src="http://www.ycombinator.com/images/ycombinator-logo-fb889e2e.png"
           style={iconStyle}
+          alt='Y Combinator logo'
         />
       </div>
       <div className="navbar-item">

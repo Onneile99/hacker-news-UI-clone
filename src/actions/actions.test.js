@@ -1,40 +1,38 @@
-import { expect } from 'chai';
-
-import nock from 'nock';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
+import moxios from 'moxios';
 
-import * as actions from '../src/actions/actions';
-import * as types from '../src/actions/types';
+import * as actions from './actions';
+import * as types from './types';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 
 describe('ARTICLES ACTIONS', () => {
   describe('fetchArticlesRequest', () => {
-    it('returns \'FETCH ARTICLES REQUEST\'', () => {
-      expect(actions.fetchArticlesRequest()).to.eql({
+    test('returns \'FETCH ARTICLES REQUEST\'', () => {
+      expect(actions.fetchArticlesRequest()).toEqual({
         type: 'FETCH ARTICLES REQUEST'
       });
     });
   });
   describe('fetchArticlesSuccess', () => {
-    it('returns \'FETCH ARTICLES SUCCESS\' and payload', () => {
+    test('returns \'FETCH ARTICLES SUCCESS\' and payload', () => {
       const input = {
         article: 'I am an article!'
       };
-      expect(actions.fetchArticlesSuccess(input)).to.eql({
+      expect(actions.fetchArticlesSuccess(input)).toEqual({
         type: 'FETCH ARTICLES SUCCESS',
         payload: input
       });
     });
   });
   describe('fetchArticlesFailed ', () => {
-    it('returns \'FETCH ARTICLES FAILED\' and payload', () => {
+    test('returns \'FETCH ARTICLES FAILED\' and payload', () => {
       const err = {
         err: 'I am an error!'
       };
-      expect(actions.fetchArticlesFailed(err)).to.eql({
+      expect(actions.fetchArticlesFailed(err)).toEqual({
         type: 'FETCH ARTICLES FAILED',
         payload: err
       });
@@ -43,19 +41,22 @@ describe('ARTICLES ACTIONS', () => {
 
   describe('fetchArticles ASYNC', () => {
     beforeEach(() => {
-      nock.disableNetConnect();
+      moxios.install();
     });
 
     afterEach(() => {
-      nock.cleanAll();
-      nock.enableNetConnect();
+      moxios.uninstall;
     });
-    it('returns correct series of actions and payload if succesful', () => {
-      nock('http://localhost:3000/api')
-        .get('/articles')
-        .reply(200, {
-          articles: ['do something']
+    test('returns correct series of actions and payload if succesful', () => {
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {
+            articles: ['do something']
+          }
         });
+      });
 
       const store = mockStore({
         articles: []
@@ -69,35 +70,35 @@ describe('ARTICLES ACTIONS', () => {
         }
       ];
       return store.dispatch(actions.fetchArticles()).then(() => {
-        expect(store.getActions()).to.eql(expectedActions);
+        expect(store.getActions()).toEqual(expectedActions);
       });
     });
   });
 
   describe('fetchArticleByIdRequest', () => {
-    it('returns \'FETCH ARTICLE BY ID REQUEST\'', () => {
-      expect(actions.fetchArticleByIdRequest()).to.eql({
+    test('returns \'FETCH ARTICLE BY ID REQUEST\'', () => {
+      expect(actions.fetchArticleByIdRequest()).toEqual({
         type: 'FETCH ARTICLE BY ID REQUEST'
       });
     });
   });
   describe('fetchArticleByIdSuccess', () => {
-    it('returns \'FETCH ARTICLE BY ID SUCCESS\' and payload', () => {
+    test('returns \'FETCH ARTICLE BY ID SUCCESS\' and payload', () => {
       const input = {
         article: 'I am an article!'
       };
-      expect(actions.fetchArticleByIdSuccess(input)).to.eql({
+      expect(actions.fetchArticleByIdSuccess(input)).toEqual({
         type: 'FETCH ARTICLE BY ID SUCCESS',
         payload: input
       });
     });
   });
   describe('fetchArticleByIdFailed ', () => {
-    it('returns \'FETCH ARTICLE BY ID FAILED\' and payload', () => {
+    test('returns \'FETCH ARTICLE BY ID FAILED\' and payload', () => {
       const err = {
         err: 'I am an error!'
       };
-      expect(actions.fetchArticleByIdFailed(err)).to.eql({
+      expect(actions.fetchArticleByIdFailed(err)).toEqual({
         type: 'FETCH ARTICLE BY ID FAILED',
         payload: err
       });
@@ -105,21 +106,25 @@ describe('ARTICLES ACTIONS', () => {
   });
 
   describe('fetchArticleById ASYNC', () => {
-    beforeEach(() => {
-      nock.disableNetConnect();
+    beforeEach(function () {
+      moxios.install();
     });
 
-    afterEach(() => {
-      nock.cleanAll();
-      nock.enableNetConnect();
+    afterEach(function () {
+      moxios.uninstall();
     });
-    it('returns correct series of actions and payload if succesful', () => {
+
+    test('returns correct series of actions and payload if succesful', () => {
       const testId = '594b9910c8f51a1e1b7f4243';
-      nock('http://localhost:3000/api')
-        .get(`/articles/${testId}`)
-        .reply(200, {
-          article: { title: 'test' }
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {
+            article: { title: 'test' }
+          }
         });
+      });
 
       const store = mockStore({
         article: null
@@ -135,19 +140,19 @@ describe('ARTICLES ACTIONS', () => {
         }
       ];
       return store.dispatch(actions.fetchArticleById(testId)).then(() => {
-        expect(store.getActions()).to.eql(expectedActions);
+        expect(store.getActions()).toEqual(expectedActions);
       });
     });
   });
   describe('alterArticleVotesRequest', () => {
-    it('returns \'ALTER ARTICLE VOTES REQUEST\'', () => {
-      expect(actions.alterArticleVotesRequest()).to.eql({
+    test('returns \'ALTER ARTICLE VOTES REQUEST\'', () => {
+      expect(actions.alterArticleVotesRequest()).toEqual({
         type: 'ALTER ARTICLE VOTES REQUEST'
       });
     });
   });
   describe('alterArticleVotesSuccess', () => {
-    it('returns \'ALTER ARTICLE VOTES SUCCESS\' and payload', () => {
+    test('returns \'ALTER ARTICLE VOTES SUCCESS\' and payload', () => {
       const input = {
         articles: [
           {
@@ -159,7 +164,7 @@ describe('ARTICLES ACTIONS', () => {
           }
         ]
       };
-      expect(actions.alterArticleVotesSuccess(input)).to.eql({
+      expect(actions.alterArticleVotesSuccess(input)).toEqual({
         type: 'ALTER ARTICLE VOTES SUCCESS',
         payload: {
           articles: [
@@ -176,33 +181,37 @@ describe('ARTICLES ACTIONS', () => {
     });
   });
   describe('alterArticleVotesFailed', () => {
-    it('returns \'ALTER ARTICLE VOTES FAILED\' and payload', () => {
+    test('returns \'ALTER ARTICLE VOTES FAILED\' and payload', () => {
       const err = {
         err: 'I am an error!'
       };
-      expect(actions.alterArticleVotesFailed(err)).to.eql({
+      expect(actions.alterArticleVotesFailed(err)).toEqual({
         type: 'ALTER ARTICLE VOTES FAILED',
         payload: err
       });
     });
   });
   describe('alterArticleVotes ASYNC', () => {
-    beforeEach(() => {
-      nock.disableNetConnect();
+    beforeEach(function () {
+      moxios.install();
     });
 
-    afterEach(() => {
-      nock.cleanAll();
-      nock.enableNetConnect();
+    afterEach(function () {
+      moxios.uninstall();
     });
-    it('returns correct series of actions and payload if succesful', () => {
+
+    test('returns correct series of actions and payload if succesful', () => {
       const articleId = '59b2b9e284e9e2b98319eb8a';
       const vote = 'up';
-      nock('http://localhost:3000/api')
-        .put(`/articles/${articleId}?vote=${vote}`, {})
-        .reply(200, {
-          article: { body: 'test' }
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {
+            article: { body: 'test' }
+          }
         });
+      });
 
       const store = mockStore({
         article: null
@@ -220,7 +229,7 @@ describe('ARTICLES ACTIONS', () => {
       return store
         .dispatch(actions.alterArticleVotes(articleId, vote))
         .then(() => {
-          expect(store.getActions()).to.eql(expectedActions);
+          expect(store.getActions()).toEqual(expectedActions);
         });
     });
   });
@@ -228,14 +237,14 @@ describe('ARTICLES ACTIONS', () => {
 
 describe('TOPICS ACTIONS', () => {
   describe('fetchTopicsRequest', () => {
-    it('returns \'FETCH TOPICS REQUEST\'', () => {
-      expect(actions.fetchTopicsRequest()).to.eql({
+    test('returns \'FETCH TOPICS REQUEST\'', () => {
+      expect(actions.fetchTopicsRequest()).toEqual({
         type: 'FETCH TOPICS REQUEST'
       });
     });
   });
   describe('fetchTopicsSuccess', () => {
-    it('returns \'FETCH TOPICS SUCCESS\' and payload', () => {
+    test('returns \'FETCH TOPICS SUCCESS\' and payload', () => {
       const input = {
         topics: [
           {
@@ -246,39 +255,41 @@ describe('TOPICS ACTIONS', () => {
           }
         ]
       };
-      expect(actions.fetchTopicsSuccess(input)).to.eql({
+      expect(actions.fetchTopicsSuccess(input)).toEqual({
         type: 'FETCH TOPICS SUCCESS',
         payload: input
       });
     });
   });
   describe('fetchTopicsFailed', () => {
-    it('returns \'FETCH TOPICS FAILED\' and payload', () => {
+    test('returns \'FETCH TOPICS FAILED\' and payload', () => {
       const err = {
         err: 'I am an error!'
       };
-      expect(actions.fetchTopicsFailed(err)).to.eql({
+      expect(actions.fetchTopicsFailed(err)).toEqual({
         type: 'FETCH TOPICS FAILED',
         payload: err
       });
     });
   });
   describe('fetchTopics ASYNC', () => {
-    beforeEach(() => {
-      nock.disableNetConnect();
+    beforeEach(function () {
+      moxios.install();
     });
 
-    afterEach(() => {
-      nock.cleanAll();
-      nock.enableNetConnect();
+    afterEach(function () {
+      moxios.uninstall();
     });
-    it('returns correct series of actions and payload if succesful', () => {
-      nock('http://localhost:3000/api')
-        .get('/topics')
-        .reply(200, {
-          topics: ['do something']
+    test('returns correct series of actions and payload if succesful', () => {
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {
+            topics: ['do something']
+          }
         });
-
+      });
       const store = mockStore({
         topics: []
       });
@@ -291,19 +302,19 @@ describe('TOPICS ACTIONS', () => {
         }
       ];
       return store.dispatch(actions.fetchTopics()).then(() => {
-        expect(store.getActions()).to.eql(expectedActions);
+        expect(store.getActions()).toEqual(expectedActions);
       });
     });
   });
   describe('fetchTopicArticlesRequest', () => {
-    it('returns \'FETCH TOPIC ARTICLES REQUEST\'', () => {
-      expect(actions.fetchTopicArticlesRequest()).to.eql({
+    test('returns \'FETCH TOPIC ARTICLES REQUEST\'', () => {
+      expect(actions.fetchTopicArticlesRequest()).toEqual({
         type: 'FETCH TOPIC ARTICLES REQUEST'
       });
     });
   });
   describe('fetchTopicArticlesSuccess', () => {
-    it('returns \'FETCH TOPIC ARTICLES SUCCESS\' and payload', () => {
+    test('returns \'FETCH TOPIC ARTICLES SUCCESS\' and payload', () => {
       const input = {
         articles: [
           {
@@ -314,40 +325,42 @@ describe('TOPICS ACTIONS', () => {
           }
         ]
       };
-      expect(actions.fetchTopicArticlesSuccess(input)).to.eql({
+      expect(actions.fetchTopicArticlesSuccess(input)).toEqual({
         type: 'FETCH TOPIC ARTICLES SUCCESS',
         payload: input
       });
     });
   });
   describe('fetchTopicArticlesFailed', () => {
-    it('returns \'FETCH TOPIC ARTICLES FAILED\' and payload', () => {
+    test('returns \'FETCH TOPIC ARTICLES FAILED\' and payload', () => {
       const err = {
         err: 'I am an error!'
       };
-      expect(actions.fetchTopicArticlesFailed(err)).to.eql({
+      expect(actions.fetchTopicArticlesFailed(err)).toEqual({
         type: 'FETCH TOPIC ARTICLES FAILED',
         payload: err
       });
     });
   });
   describe('fetchTopicArticles ASYNC', () => {
-    beforeEach(() => {
-      nock.disableNetConnect();
+    beforeEach(function () {
+      moxios.install();
     });
 
-    afterEach(() => {
-      nock.cleanAll();
-      nock.enableNetConnect();
+    afterEach(function () {
+      moxios.uninstall();
     });
-    it('returns correct series of actions and payload if succesful', () => {
+    test('returns correct series of actions and payload if succesful', () => {
       const topicId = 'football';
-      nock('http://localhost:3000/api')
-        .get(`/topics/${topicId}/articles`)
-        .reply(200, {
-          articles: ['football stuff']
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {
+            articles: ['football stuff']
+          }
         });
-
+      });
       const store = mockStore({
         articles: []
       });
@@ -361,7 +374,7 @@ describe('TOPICS ACTIONS', () => {
       ];
 
       return store.dispatch(actions.fetchTopicArticles(topicId)).then(() => {
-        expect(store.getActions()).to.eql(expectedActions);
+        expect(store.getActions()).toEqual(expectedActions);
       });
     });
   });
@@ -369,14 +382,14 @@ describe('TOPICS ACTIONS', () => {
 
 describe('COMMENTS ACTIONS', () => {
   describe('fetchCommentsRequest', () => {
-    it('returns \'FETCH COMMENTS REQUEST\'', () => {
-      expect(actions.fetchCommentsRequest()).to.eql({
+    test('returns \'FETCH COMMENTS REQUEST\'', () => {
+      expect(actions.fetchCommentsRequest()).toEqual({
         type: 'FETCH COMMENTS REQUEST'
       });
     });
   });
   describe('fetchCommentsSuccess', () => {
-    it('returns \'FETCH COMMENTS SUCCESS\' and payload', () => {
+    test('returns \'FETCH COMMENTS SUCCESS\' and payload', () => {
       const input = {
         comments: [
           {
@@ -388,40 +401,42 @@ describe('COMMENTS ACTIONS', () => {
           }
         ]
       };
-      expect(actions.fetchCommentsSuccess(input)).to.eql({
+      expect(actions.fetchCommentsSuccess(input)).toEqual({
         type: 'FETCH COMMENTS SUCCESS',
         payload: input
       });
     });
   });
   describe('fetchCommentsFailed', () => {
-    it('returns \'FETCH COMMENTS FAILED\' and payload', () => {
+    test('returns \'FETCH COMMENTS FAILED\' and payload', () => {
       const err = {
         err: 'I am an error!'
       };
-      expect(actions.fetchCommentsFailed(err)).to.eql({
+      expect(actions.fetchCommentsFailed(err)).toEqual({
         type: 'FETCH COMMENTS FAILED',
         payload: err
       });
     });
   });
   describe('fetchComments ASYNC', () => {
-    beforeEach(() => {
-      nock.disableNetConnect();
+    beforeEach(function () {
+      moxios.install();
     });
 
-    afterEach(() => {
-      nock.cleanAll();
-      nock.enableNetConnect();
+    afterEach(function () {
+      moxios.uninstall();
     });
-    it('returns correct series of actions and payload if succesful', () => {
+    test('returns correct series of actions and payload if succesful', () => {
       const articleId = '594b9910c8f51a1e1b7f4243';
-      nock('http://localhost:3000/api')
-        .get(`/articles/${articleId}/comments`)
-        .reply(200, {
-          comments: ['a bunch of comments']
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {
+            comments: ['a bunch of comments']
+          }
         });
-
+      });
       const store = mockStore({
         comments: []
       });
@@ -434,19 +449,19 @@ describe('COMMENTS ACTIONS', () => {
         }
       ];
       return store.dispatch(actions.fetchComments(articleId)).then(() => {
-        expect(store.getActions()).to.eql(expectedActions);
+        expect(store.getActions()).toEqual(expectedActions);
       });
     });
   });
   describe('alterCommentVotesRequest', () => {
-    it('returns \'ALTER COMMENT VOTES REQUEST\'', () => {
-      expect(actions.alterCommentVotesRequest()).to.eql({
+    test('returns \'ALTER COMMENT VOTES REQUEST\'', () => {
+      expect(actions.alterCommentVotesRequest()).toEqual({
         type: 'ALTER COMMENT VOTES REQUEST'
       });
     });
   });
   describe('alterCommentVotesSuccess', () => {
-    it('returns \'ALTER COMMENT VOTES SUCCESS\' and payload', () => {
+    test('returns \'ALTER COMMENT VOTES SUCCESS\' and payload', () => {
       const input = {
         comments: [
           {
@@ -458,7 +473,7 @@ describe('COMMENTS ACTIONS', () => {
           }
         ]
       };
-      expect(actions.alterCommentVotesSuccess(input)).to.eql({
+      expect(actions.alterCommentVotesSuccess(input)).toEqual({
         type: 'ALTER COMMENT VOTES SUCCESS',
         payload: {
           comments: [
@@ -475,38 +490,39 @@ describe('COMMENTS ACTIONS', () => {
     });
   });
   describe('alterCommentVotesFailed', () => {
-    it('returns \'ALTER COMMENT VOTES FAILED\' and payload', () => {
+    test('returns \'ALTER COMMENT VOTES FAILED\' and payload', () => {
       const err = {
         err: 'I am an error!'
       };
-      expect(actions.alterCommentVotesFailed(err)).to.eql({
+      expect(actions.alterCommentVotesFailed(err)).toEqual({
         type: 'ALTER COMMENT VOTES FAILED',
         payload: err
       });
     });
   });
   describe('alterCommentVotes ASYNC', () => {
-    beforeEach(() => {
-      nock.disableNetConnect();
+    beforeEach(function () {
+      moxios.install();
     });
 
-    afterEach(() => {
-      nock.cleanAll();
-      nock.enableNetConnect();
+    afterEach(function () {
+      moxios.uninstall();
     });
-    it('returns correct series of actions and payload if succesful', () => {
+    test('returns correct series of actions and payload if succesful', () => {
       const commentId = '594b9910c8f51a1e1b7f4268';
       const vote = 'up';
-      nock('http://localhost:3000/api')
-        .put(`/comments/${commentId}?vote=${vote}`, {})
-        .reply(200, {
-          comment: { body: 'test' }
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {
+            comment: { body: 'test' }
+          }
         });
-
+      });
       const store = mockStore({
         comment: null
       });
-
       const expectedActions = [
         { type: types.ALTER_COMMENT_VOTES_REQUEST },
         {
@@ -519,19 +535,19 @@ describe('COMMENTS ACTIONS', () => {
       return store
         .dispatch(actions.alterCommentVotes(commentId, vote))
         .then(() => {
-          expect(store.getActions()).to.eql(expectedActions);
+          expect(store.getActions()).toEqual(expectedActions);
         });
     });
   });
   describe('addCommentRequest', () => {
-    it('returns \'ADD COMMENT REQUEST\'', () => {
-      expect(actions.addCommentRequest()).to.eql({
+    test('returns \'ADD COMMENT REQUEST\'', () => {
+      expect(actions.addCommentRequest()).toEqual({
         type: 'ADD COMMENT REQUEST'
       });
     });
   });
   describe('addCommentSuccess', () => {
-    it('returns \'ADD COMMENT SUCCESS\' and payload', () => {
+    test('returns \'ADD COMMENT SUCCESS\' and payload', () => {
       const input = {
         comment: {
           _id: '594b990fc8f51a1e1b7f4240',
@@ -541,7 +557,7 @@ describe('COMMENTS ACTIONS', () => {
           votes: 4
         }
       };
-      expect(actions.addCommentSuccess(input)).to.eql({
+      expect(actions.addCommentSuccess(input)).toEqual({
         type: 'ADD COMMENT SUCCESS',
         payload: {
           comment: {
@@ -556,34 +572,36 @@ describe('COMMENTS ACTIONS', () => {
     });
   });
   describe('addCommentFailed', () => {
-    it('returns \'ADD COMMENT FAILED\' and payload', () => {
+    test('returns \'ADD COMMENT FAILED\' and payload', () => {
       const err = {
         err: 'I am an error!'
       };
-      expect(actions.addCommentFailed(err)).to.eql({
+      expect(actions.addCommentFailed(err)).toEqual({
         type: 'ADD COMMENT FAILED',
         payload: err
       });
     });
   });
   describe('addComment ASYNC', () => {
-    beforeEach(() => {
-      nock.disableNetConnect();
+    beforeEach(function () {
+      moxios.install();
     });
 
-    afterEach(() => {
-      nock.cleanAll();
-      nock.enableNetConnect();
+    afterEach(function () {
+      moxios.uninstall();
     });
-    it('returns correct series of actions and payload if succesful', () => {
+    test('returns correct series of actions and payload if succesful', () => {
       const articleId = '59b2b9e284e9e2b98319eb8a';
       const input = { body: 'test', _id: '1' };
-      nock('http://localhost:3000/api')
-        .post(`/articles/${articleId}/comments`, input)
-        .reply(200, {
-          newComment: { body: 'test', _id: '1' }
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {
+            newComment: { body: 'test', _id: '1' }
+          }
         });
-
+      });
       const store = mockStore({
         newComment: null
       });
@@ -598,19 +616,19 @@ describe('COMMENTS ACTIONS', () => {
         }
       ];
       return store.dispatch(actions.addComment(articleId, input)).then(() => {
-        expect(store.getActions()).to.eql(expectedActions);
+        expect(store.getActions()).toEqual(expectedActions);
       });
     });
   });
   describe('deleteCommentRequest', () => {
-    it('returns \'DELETE COMMENT REQUEST\'', () => {
-      expect(actions.deleteCommentRequest()).to.eql({
+    test('returns \'DELETE COMMENT REQUEST\'', () => {
+      expect(actions.deleteCommentRequest()).toEqual({
         type: 'DELETE COMMENT REQUEST'
       });
     });
   });
   describe('deleteCommentSuccess', () => {
-    it('returns \'DELETE COMMENT SUCCESS\' and payload', () => {
+    test('returns \'DELETE COMMENT SUCCESS\' and payload', () => {
       const input = {
         message: 'sucess',
         deletedComment: {
@@ -621,7 +639,7 @@ describe('COMMENTS ACTIONS', () => {
           votes: 4
         }
       };
-      expect(actions.deleteCommentSuccess(input)).to.eql({
+      expect(actions.deleteCommentSuccess(input)).toEqual({
         type: 'DELETE COMMENT SUCCESS',
         payload: {
           message: 'sucess',
@@ -637,43 +655,46 @@ describe('COMMENTS ACTIONS', () => {
     });
   });
   describe('deleteCommentFailed', () => {
-    it('returns \'DELETE COMMENT FAILED\' and payload', () => {
+    test('returns \'DELETE COMMENT FAILED\' and payload', () => {
       const err = {
         err: 'I am an error!'
       };
-      expect(actions.deleteCommentFailed(err)).to.eql({
+      expect(actions.deleteCommentFailed(err)).toEqual({
         type: 'DELETE COMMENT FAILED',
         payload: err
       });
     });
   });
   describe('deleteComment ASYNC', () => {
-    beforeEach(() => {
-      nock.disableNetConnect();
+    beforeEach(function () {
+      moxios.install();
     });
 
-    afterEach(() => {
-      nock.cleanAll();
-      nock.enableNetConnect();
+    afterEach(function () {
+      moxios.uninstall();
     });
-    it('returns correct series of actions and payload if succesful', () => {
+    test('returns correct series of actions and payload if succesful', () => {
       const commentId = '59cd27639f8522f393caaa11';
       const user = 'northcoder';
-      nock('http://localhost:3000/api')
-        .delete(`/comments/${commentId}?user=northcoder`)
-        .reply(200, {
-          message:
-            'The comment with id: 59cd27639f8522f393caaa11 has been removed',
-          deletedComment: {
-            _id: '59cd27639f8522f393caaa11',
-            belongs_to: '59b2b9e284e9e2b98319eb8a',
-            body: 'testjhfjghdjgfjhdjfhgj\n',
-            __v: 0,
-            created_by: 'northcoder',
-            votes: 0,
-            created_at: 1506616933566
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {
+            message:
+              'The comment with id: 59cd27639f8522f393caaa11 has been removed',
+            deletedComment: {
+              _id: '59cd27639f8522f393caaa11',
+              belongs_to: '59b2b9e284e9e2b98319eb8a',
+              body: 'testjhfjghdjgfjhdjfhgj\n',
+              __v: 0,
+              created_by: 'northcoder',
+              votes: 0,
+              created_at: 1506616933566
+            }
           }
         });
+      });
 
       const store = mockStore({
         comments: [
@@ -709,7 +730,7 @@ describe('COMMENTS ACTIONS', () => {
         }
       ];
       return store.dispatch(actions.deleteComment(commentId, user)).then(() => {
-        expect(store.getActions()).to.eql(expectedActions);
+        expect(store.getActions()).toEqual(expectedActions);
       });
     });
   });

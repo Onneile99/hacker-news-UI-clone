@@ -1,13 +1,13 @@
 import * as types from './types';
-
 import axios from 'axios';
-import {ROOT} from '../config';
+
+const API_URL = 'https://mighty-depths-65373.herokuapp.com/api';
 
 // ARTICLES 
 export function fetchArticles () {
     return function (dispatch) {
         dispatch(fetchArticlesRequest());
-        return axios.get(`${ROOT}/articles`)
+        return axios.get(`${API_URL}/articles`)
             .then(res => {
                 dispatch(fetchArticlesSuccess(res.data.articles));
             })
@@ -60,7 +60,7 @@ export function fetchArticleByIdFailed (err) {
 export function fetchArticleById (id) {
     return function (dispatch) {
         dispatch(fetchArticleByIdRequest());
-        return axios.get(`${ROOT}/articles/${id}`)
+        return axios.get(`${API_URL}/articles/${id}`)
             .then(res => {
                 dispatch(fetchArticleByIdSuccess(res.data));
             })
@@ -90,10 +90,11 @@ export function alterArticleVotesFailed (err) {
     };
 }
 
+
 export function alterArticleVotes (articleId, vote) {
     return function (dispatch) {
         dispatch(alterArticleVotesRequest());
-        return axios.put(`${ROOT}/articles/${articleId}?vote=${vote}`, {})
+        return axios.put(`${API_URL}/articles/${articleId}?vote=${vote}`, {})
             .then(res => {
                 dispatch(alterArticleVotesSuccess(res.data));
             })
@@ -107,7 +108,7 @@ export function alterArticleVotes (articleId, vote) {
 export function fetchTopics () {
     return function (dispatch) {
         dispatch(fetchTopicsRequest());
-        return axios.get(`${ROOT}/topics`)
+        return axios.get(`${API_URL}/topics`)
             .then(res => {
                 dispatch(fetchTopicsSuccess(res.data.topics));
             })
@@ -157,10 +158,11 @@ export function fetchTopicArticlesFailed (err) {
     };
 }
 
+
 export function fetchTopicArticles (id) {
     return function (dispatch) {
         dispatch(fetchTopicArticlesRequest());
-        return axios.get(`${ROOT}/topics/${id}/articles`)
+        return axios.get(`${API_URL}/topics/${id}/articles`)
             .then(res => {
                 dispatch(fetchTopicArticlesSuccess(res.data.articles));
             })
@@ -192,10 +194,11 @@ export function fetchCommentsFailed (err) {
     };
 }
 
+
 export function fetchComments (articleId) {
     return function (dispatch) {
         dispatch(fetchCommentsRequest());
-        return axios.get(`${ROOT}/articles/${articleId}/comments`)
+        return axios.get(`${API_URL}/articles/${articleId}/comments`)
             .then(res => {
                 dispatch(fetchCommentsSuccess(res.data.comments));
             })
@@ -225,10 +228,11 @@ export function alterCommentVotesFailed (err) {
     };
 }
 
+
 export function alterCommentVotes (commentId, vote) {
     return function (dispatch) {
         dispatch(alterCommentVotesRequest());
-        return axios.put(`${ROOT}/comments/${commentId}?vote=${vote}`, {})
+        return axios.put(`${API_URL}/comments/${commentId}?vote=${vote}`, {})
             .then(res => {
                 dispatch(alterCommentVotesSuccess(res.data));
             })
@@ -258,10 +262,11 @@ export function addCommentFailed (err) {
     };
 }
 
+
 export function addComment (articleId, input) {
     return function (dispatch) {
         dispatch(addCommentRequest());
-        return axios.post(`${ROOT}/articles/${articleId}/comments`, input)
+        return axios.post(`${API_URL}/articles/${articleId}/comments`, input)
             .then(res => {
                 dispatch(addCommentSuccess(res.data));
             })
@@ -291,10 +296,11 @@ export function deleteCommentFailed (err) {
     };
 }
 
+
 export function deleteComment (commentId, user) {
     return function (dispatch) {
         dispatch(deleteCommentRequest());
-        return axios.delete(`${ROOT}/comments/${commentId}?user=${user}`)
+        return axios.delete(`${API_URL}/comments/${commentId}?user=${user}`)
             .then(res => {
                 dispatch(deleteCommentSuccess(res.data));
             })

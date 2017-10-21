@@ -52,12 +52,12 @@ $ npm i
 
 Use the start instructions fron the API page and make sure the api is running - test it in the browser.
 
-#### Start webpack 
+#### Start the webapp
 
-In a separate terminal window start mongod by running the following command.
+The app was build using create-react-app so it uses it's standard scripts. In a separate terminal window start mongod by running the following command.
 
 ```
-$ npm run dev
+$ npm run start
 ```
 Make sure no other clients are accessing the 9090 port. If they are locate the processes and stop them.
 
@@ -67,12 +67,12 @@ In the browser navigate to http://localhost:9090/ and follow the UI cues.
 
 ## Running the tests
 
-The tests are built using Mocha, Chai, and Supertest
+The tests are built using Jest and Moxios
 
 To run the tests, type the following command in your terminal anywhere withing the project folder
 
 ```
-$ npm t
+$ npm test
 ```
 
 The test available: 
@@ -85,50 +85,52 @@ fetchCommentsRequest() SYNC action
 
 ```javascript
 describe('fetchCommentsRequest', () => {
-    it('returns \'FETCH COMMENTS REQUEST\'', () => {
-    expect(actions.fetchCommentsRequest()).to.eql({
+    test('returns \'FETCH COMMENTS REQUEST\'', () => {
+      expect(actions.fetchCommentsRequest()).toEqual({
         type: 'FETCH COMMENTS REQUEST'
+      });
     });
-    });
-});
+  });
 ```
 
 fetchComments() ASYNC action
 
 ```javascript
 describe('fetchComments ASYNC', () => {
-    beforeEach(() => {
-    nock.disableNetConnect();
+    beforeEach(function () {
+      moxios.install();
     });
 
-    afterEach(() => {
-    nock.cleanAll();
-    nock.enableNetConnect();
+    afterEach(function () {
+      moxios.uninstall();
     });
-    it('returns correct series of actions and payload if succesful', () => {
-    const articleId = '594b9910c8f51a1e1b7f4243';
-    nock('http://localhost:3000/api')
-        .get(`/articles/${articleId}/comments`)
-        .reply(200, {
-        comments: ['a bunch of comments']
+    test('returns correct series of actions and payload if succesful', () => {
+      const articleId = '594b9910c8f51a1e1b7f4243';
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {
+            comments: ['a bunch of comments']
+          }
         });
-
-    const store = mockStore({
+      });
+      const store = mockStore({
         comments: []
-    });
+      });
 
-    const expectedActions = [
+      const expectedActions = [
         { type: types.FETCH_COMMENTS_REQUEST },
         {
-        type: types.FETCH_COMMENTS_SUCCESS,
-        payload: ['a bunch of comments']
+          type: types.FETCH_COMMENTS_SUCCESS,
+          payload: ['a bunch of comments']
         }
-    ];
-    return store.dispatch(actions.fetchComments(articleId)).then(() => {
-        expect(store.getActions()).to.eql(expectedActions);
+      ];
+      return store.dispatch(actions.fetchComments(articleId)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
     });
-    });
-});
+  });
 ```
 
 ### Reducers Testing patterns
@@ -137,34 +139,34 @@ fetchArticleById() article.reducer.js
 
 ```javascript
 describe('fetchArticleById', () => {
-    it('add one article to the new state', () => {
+    test('add one article to the new state', () => {
       const action = actions.fetchArticleByIdSuccess({
         article: { title: 'test article' }
       });
       const newState = reducer(initialState, action);
-      expect(newState.articleById).to.be.an('object');
-      expect(newState.articleById).to.eql({ title: 'test article' });
+      expect(typeof newState.articleById).toBe('object');
+      expect(newState.articleById).toEqual({ title: 'test article' });
     });
-    it('changes the loading property in the new state', () => {
+    test('changes the loading property in the new state', () => {
       const action = actions.fetchArticleByIdRequest();
       const newState = reducer(initialState, action);
-      expect(newState.loading).to.be.true;
+      expect(newState.loading).toBe(true);
     });
-    it('returns the error if it fails', () => {
+    test('returns the error if it fails', () => {
       const action = actions.fetchArticleByIdFailed('error');
       const newState = reducer(initialState, action);
-      expect(newState.error).to.eql('error');
+      expect(newState.error).toEqual('error');
     });
-});
+  });
 ```
 
 ### React Testing
 
-I skipped React testing at this stage because I broke up the components into presentation and container componenets:
+I skipped React rendering tests at this stage because I broke up the components into presentation and container componenets:
 - presentational: render data to html
 - container: fetches data and manages state
 
-Becuase of this structure the action and reducer test were enough to make sure that the contianers where fetching the correct data. I used prop type validation to make sure that the state is mapped and passed down correctly.
+Because of this structure the action and reducer tests were enough to make sure that the containers where fetching data correctly. I used prop type validation to make sure that the state is mapped and passed down correctly. Presentational component were kept simple so as to avoid any rendering mishaps.
 
 ## File Structure
 
@@ -172,23 +174,16 @@ Becuase of this structure the action and reducer test were enough to make sure t
     ├── .babelrc
     ├── .eslintrc
     ├── README.md
-    ├── config.js
-    ├── out.txt
-    ├── package-lock.json
     ├── package.json
     ├── public
-    |  └── index.html
-    ├── spec
-    |  ├── actions.spec.js
-    |  ├── article.reducer.spec.js
-    |  ├── articles.reducer.spec.js
-    |  ├── comments.reducer.spec.js
-    |  └── topics.reducer.spec.js
+    |  ├── index.html
+    |  └── manifest.json
     ├── src
     |  ├── Root.js
     |  ├── actions
     |  |  ├── actions.js
     |  |  └── types.js
+    |  |  ├── actions.test.js
     |  ├── components
     |  |  ├── containers
     |  |  |  ├── AppContainer.js
@@ -207,6 +202,7 @@ Becuase of this structure the action and reducer test were enough to make sure t
     |  |     ├── Navbar.js
     |  |     ├── TopicsFilterLink.js
     |  |     └── TopicsSubNav.js
+    |  ├── config.js
     |  ├── css
     |  |  ├── bulma.css
     |  |  └── font-awesome.css
@@ -222,11 +218,14 @@ Becuase of this structure the action and reducer test were enough to make sure t
     |  ├── index.js
     |  └── reducers
     |     ├── article.reducer.js
+    |     ├── article.reducer.test.js
     |     ├── articles.reducer.js
+    |     ├── articles.reducer.test.js
     |     ├── comments.reducer.js
+    |     ├── comments.reducer.test.js
     |     ├── index.js
-    |     └── topics.reducer.js
-    └── webpack.config.js
+    |     ├── topics.reducer.js
+    |     └── topics.reducer.test.js
 
 
 ## Built With
@@ -244,22 +243,15 @@ Becuase of this structure the action and reducer test were enough to make sure t
 * [Redux Form](https://redux-form.com) - A better way to manage your form state in Redux
 
 ### Dev Dependencies
-* (global)[Mocha](https://mochajs.org) - Javascript test framework
-* (global)[Chai](http://chaijs.com/guide/) - Test assertion library
 * [Husky](https://github.com/typicode/husky) - Git hooks made easy, used to chain linting and tests before commits
-* [ESLint + JSX, React plugins](http://eslint.org) - Linting utility
+* [Jest](https://facebook.github.io/jest/) - Javascript Testing solution
+* [ESLint + JSX, React, Jest plugins](http://eslint.org) - Linting utility
 * [Prettier](https://www.npmjs.com/package/prettier) - Code formater, used to enforce linting at save
 * [Axios](https://www.npmjs.com/package/axios) - Promise based HTTP client for the browser and node.js
-* [Babel Core, Loader, es2015 and React presets](https://babeljs.io) - JS compiler
-* [Nock](https://www.npmjs.com/package/nock) - HTTP Server mocking for Node.js
+* [Moxiox](https://www.npmjs.com/package/moxios) - Mock axios requests for testing
 * [Redux Mock Store](https://www.npmjs.com/package/redux-mock-store) - Mock store for testing Redux
 * [Redux Thunk](https://www.npmjs.com/package/redux-thunk) - Redux thunk middleware
-* [Webpack](https://www.npmjs.com/package/webpack) - webpack, the magical unicorn
-* [Webpack Dev Server](https://www.npmjs.com/package/webpack-dev-server) - webpack server that updates browser on changes
-* [File Loader](https://www.npmjs.com/package/file-loader) - File Loader module for webpack
-* [CSS Loader](https://www.npmjs.com/package/css-loader) - CSS module for webpack
-* [URL Loader](https://www.npmjs.com/package/url-loader) - URL Loader module for webpack
-* [Style Loader](https://www.npmjs.com/package/style-loader) - Style Loader module for webpack
+
 
 ## Authors
 

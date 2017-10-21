@@ -1,7 +1,7 @@
 import * as types from './types';
 import axios from 'axios';
 
-const API_URL = 'https://hacker-news-api-clone.herokuapp.com';
+const API_URL = 'https://hacker-news-api-clone.herokuapp.com/api';
 
 // ARTICLES 
 export function fetchArticles () {
